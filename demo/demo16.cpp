@@ -4,20 +4,19 @@
 */
 #include "../_freecplus.h"
 
-int main()
-{
+int main() {
   char str[26];   // 字符串str的大小是11字节。
 
-  STRCPY(str,sizeof(str),"iab+12.3xy");
-  PickNumber(str,str,false,false);
-  printf("str=%s=\n",str);    // 出输结果是str=123=
+  STRCPY(str, sizeof(str), "iab+12.3xy");
+  PickNumber(str, str, false, false);
+  printf("str=%s=\n", str);    // 出输结果是str=123=
 
-  STRCPY(str,sizeof(str),"iab+12.3xy");
-  PickNumber(str,str,true,false);
-  printf("str=%s=\n",str);    // 出输结果是str=+123=
+  STRCPY(str, sizeof(str), "iab+12.3xy");
+  PickNumber(str, str, true, false);
+  printf("str=%s=\n", str);    // 出输结果是str=+123=
 
-  STRCPY(str,sizeof(str),"iab+12.3xy");
-  PickNumber(str,str,true,true);
-  printf("str=%s=\n",str);    // 出输结果是str=+12.3=
+  STRCPY(str, sizeof(str), "iab+12.3xy");
+  PickNumber(str, str, true, true);
+  printf("str=%s=\n", str);    // 出输结果是str=+12.3=
 }
 

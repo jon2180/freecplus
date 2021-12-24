@@ -19,8 +19,7 @@
 #include "_freecplus.h"
 #include "ftplib.h"
 
-class Cftp
-{
+class Cftp {
 public:
   netbuf *m_ftpconn;   // ftp连接句柄。
   unsigned int m_size; // 文件的大小，单位：字节。
@@ -32,7 +31,7 @@ public:
   bool m_optionfailed;     // 设置传输模式失败。
 
   Cftp();  // 类的构造函数。
- ~Cftp();  // 类的析构函数。
+  ~Cftp();  // 类的析构函数。
 
   void initdata();   // 初始化m_size和m_mtime成员变量。
 
@@ -41,8 +40,8 @@ public:
   // username：登录ftp服务器用户名。
   // password：登录ftp服务器的密码。
   // imode：传输模式，FTPLIB_PASSIVE是被动模式，FTPLIB_PORT是主动模式，缺省是被动模式。
-  bool login(const char *host,const char *username,const char *password,const int imode=FTPLIB_PASSIVE);
-  
+  bool login(const char *host, const char *username, const char *password, const int imode = FTPLIB_PASSIVE);
+
   // 注销。
   bool logout();
 
@@ -76,7 +75,7 @@ public:
   // listfilename：用于保存从服务器返回的目录和文件名列表。
   // 返回值：true-成功；false-失败。
   // 注意：如果列出的是ftp服务器当前目录，remotedir用"","*","."都可以，但是，不规范的ftp服务器可能有差别。
-  bool nlist(const char *remotedir,const char *listfilename);
+  bool nlist(const char *remotedir, const char *listfilename);
 
   // 从ftp服务器上获取文件。
   // remotefilename：待获取ftp服务器上的文件名。
@@ -85,7 +84,7 @@ public:
   // 返回值：true-成功；false-失败。
   // 注意：文件在传输的过程中，采用临时文件命名的方法，即在localfilename后加".tmp"，在传输
   // 完成后才正式改为localfilename。
-  bool get(const char *remotefilename,const char *localfilename,const bool bCheckMTime=true);
+  bool get(const char *remotefilename, const char *localfilename, const bool bCheckMTime = true);
 
   // 向ftp服务器发送文件。
   // localfilename：本地待发送的文件名。
@@ -94,7 +93,7 @@ public:
   // 返回值：true-成功；false-失败。
   // 注意：文件在传输的过程中，采用临时文件命名的方法，即在remotefilename后加".tmp"，在传输
   // 完成后才正式改为remotefilename。
-  bool put(const char *localfilename,const char *remotefilename,const bool bCheckSize=true);
+  bool put(const char *localfilename, const char *remotefilename, const bool bCheckSize = true);
 
   // 删除ftp服务器上的文件。
   // remotefilename：待删除的ftp服务器上的文件名。
@@ -105,12 +104,12 @@ public:
   // srcremotefilename：ftp服务器上的原文件名。
   // dstremotefilename：ftp服务器上的目标文件名。
   // 返回值：true-成功；false-失败。
-  bool ftprename(const char *srcremotefilename,const char *dstremotefilename);
+  bool ftprename(const char *srcremotefilename, const char *dstremotefilename);
 
   /* 以下三个方法如果理解不了就算了，可以不启用。 */
   // 发送LIST命令列出ftp服务器目录中的文件。
   // 参数和返回值与nlist方法相同。
-  bool dir(const char *remotedir,const char *listfilename);
+  bool dir(const char *remotedir, const char *listfilename);
 
   // 向ftp服务器发送site命令。
   // command：命令的内容。

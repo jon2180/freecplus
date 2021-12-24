@@ -4,15 +4,14 @@
 */
 #include "../_freecplus.h"
 
-int main()
-{
+int main() {
   //char str[11];   // 字符串str的大小是11字节。
-  char *str=0;   // 字符串str的大小是11字节。
+  char *str = 0;   // 字符串str的大小是11字节。
 
-  STRCPY(str,sizeof(str),"freecplus");  // 待复制的内容没有超过str可以存放字符串的大小。
-  printf("str=%s=\n",str);    // 出输结果是str=freecplus=
+  STRCPY(str, sizeof(str), "freecplus");  // 待复制的内容没有超过str可以存放字符串的大小。
+  printf("str=%s=\n", str);    // 出输结果是str=freecplus=
 
-  STRCPY(str,sizeof(str),"www.freecplus.net");  // 待复制的内容超过了str可以存放字符串的大小。
-  printf("str=%s=\n",str);    // 出输结果是str=www.freecp=
+  STRCPY(str, sizeof(str), "www.freecplus.net");  // 待复制的内容超过了str可以存放字符串的大小。
+  printf("str=%s=\n", str);    // 出输结果是str=www.freecp=
 }
 

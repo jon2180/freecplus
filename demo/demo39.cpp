@@ -4,22 +4,21 @@
 */
 #include "../_freecplus.h"
 
-int main()
-{
+int main() {
   CFile File;
 
   char strLocalTime[21];   // 用于存放系统当前的时间，格式yyyymmddhh24miss。
-  memset(strLocalTime,0,sizeof(strLocalTime));
-  LocalTime(strLocalTime,"yyyymmddhh24miss");  // 获取系统当前时间。
-  
+  memset(strLocalTime, 0, sizeof(strLocalTime));
+  LocalTime(strLocalTime, "yyyymmddhh24miss");  // 获取系统当前时间。
+
   // 生成绝对路径的文件名，目录/tmp/data，文件名：前缀(surfdata_)+时间+后缀(.xml)。
   char strFileName[301];
-  SNPRINTF(strFileName,sizeof(strFileName),300,"/tmp/data/surfdata_%s.xml",strLocalTime);
+  SNPRINTF(strFileName, sizeof(strFileName), 300, "/tmp/data/surfdata_%s.xml", strLocalTime);
 
   // 采用OpenForRename创建文件，实际创建的文件名例如/tmp/data/surfdata_20200101123000.xml.tmp。
-  if (File.OpenForRename(strFileName,"w")==false)
-  {
-    printf("File.OpenForRename(%s) failed.\n",strFileName); return -1;
+  if (File.OpenForRename(strFileName, "w") == false) {
+	printf("File.OpenForRename(%s) failed.\n", strFileName);
+	return -1;
   }
 
   // 这里可以插入向文件写入数据的代码。

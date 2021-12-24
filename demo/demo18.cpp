@@ -4,21 +4,26 @@
 */
 #include "../_freecplus.h"
 
-int main()
-{
-  char filename[301];  
-  STRCPY(filename,sizeof(filename),"_freecplus.h");
-  
-  // 以下代码将输出yes。
-  if (MatchStr(filename,"*.h,*.cpp")==true) printf("yes\n");
-  else printf("no\n");
+int main() {
+  char filename[301];
+  STRCPY(filename, sizeof(filename), "_freecplus.h");
 
   // 以下代码将输出yes。
-  if (MatchStr(filename,"*.H")==true) printf("yes\n");
-  else printf("no\n");
+  if (MatchStr(filename, "*.h,*.cpp") == true)
+	printf("yes\n");
+  else
+	printf("no\n");
+
+  // 以下代码将输出yes。
+  if (MatchStr(filename, "*.H") == true)
+	printf("yes\n");
+  else
+	printf("no\n");
 
   // 以下代码将输出no。
-  if (MatchStr(filename,"*.cpp")==true) printf("yes\n");
-  else printf("no\n");
+  if (MatchStr(filename, "*.cpp") == true)
+	printf("yes\n");
+  else
+	printf("no\n");
 }
 

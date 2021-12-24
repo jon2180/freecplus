@@ -72,10 +72,10 @@ typedef struct NetBuf netbuf;
 typedef int (*FtpCallback)(netbuf *nControl, fsz_t xfered, void *arg);
 
 typedef struct FtpCallbackOptions {
-    FtpCallback cbFunc;		/* function to call */
-    void *cbArg;		/* argument to pass to function */
-    unsigned int bytesXferred;	/* callback if this number of bytes transferred */
-    unsigned int idleTime;	/* callback if this many milliseconds have elapsed */
+  FtpCallback cbFunc;        /* function to call */
+  void *cbArg;        /* argument to pass to function */
+  unsigned int bytesXferred;    /* callback if this number of bytes transferred */
+  unsigned int idleTime;    /* callback if this many milliseconds have elapsed */
 } FtpCallbackOptions;
 
 GLOBALREF int ftplib_debug;
@@ -87,7 +87,7 @@ GLOBALREF int FtpSetCallback(const FtpCallbackOptions *opt, netbuf *nControl);
 GLOBALREF int FtpClearCallback(netbuf *nControl);
 GLOBALREF int FtpLogin(const char *user, const char *pass, netbuf *nControl);
 GLOBALREF int FtpAccess(const char *path, int typ, int mode, netbuf *nControl,
-    netbuf **nData);
+						netbuf **nData);
 GLOBALREF int FtpRead(void *buf, int max, netbuf *nData);
 GLOBALREF int FtpWrite(const void *buf, int len, netbuf *nData);
 GLOBALREF int FtpClose(netbuf *nData);
@@ -106,9 +106,9 @@ GLOBALREF int FtpSizeLong(const char *path, fsz_t *size, char mode, netbuf *nCon
 #endif
 GLOBALREF int FtpModDate(const char *path, char *dt, int max, netbuf *nControl);
 GLOBALREF int FtpGet(const char *output, const char *path, char mode,
-	netbuf *nControl);
+					 netbuf *nControl);
 GLOBALREF int FtpPut(const char *input, const char *path, char mode,
-	netbuf *nControl);
+					 netbuf *nControl);
 GLOBALREF int FtpRename(const char *src, const char *dst, netbuf *nControl);
 GLOBALREF int FtpDelete(const char *fnm, netbuf *nControl);
 GLOBALREF void FtpQuit(netbuf *nControl);

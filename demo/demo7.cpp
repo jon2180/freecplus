@@ -4,14 +4,13 @@
 */
 #include "../_freecplus.h"
 
-int main()
-{
+int main() {
   char str[21];   // 字符串str的大小是21字节。
 
-  SPRINTF(str,sizeof(str),"name:%s,no:%d","messi",10);
-  printf("str=%s=\n",str);    // 出输结果是str=name:messi,no:10=
+  SPRINTF(str, sizeof(str), "name:%s,no:%d", "messi", 10);
+  printf("str=%s=\n", str);    // 出输结果是str=name:messi,no:10=
 
-  SPRINTF(str,sizeof(str),"name:%s,no:%d,job:%s","messi",10,"striker");
-  printf("str=%s=\n",str);    // 出输结果是str=name:messi,no:10,job=
+  SPRINTF(str, sizeof(str), "name:%s,no:%d,job:%s", "messi", 10, "striker");
+  printf("str=%s=\n", str);    // 出输结果是str=name:messi,no:10,job=
 }
 

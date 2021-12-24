@@ -4,20 +4,19 @@
 */
 #include "../_freecplus.h"
 
-int main()
-{
+int main() {
   char str[11];   // 字符串str的大小是11字节。
 
-  STRCPY(str,sizeof(str),"  西施  ");
-  DeleteLChar(str,' ');  // 删除str左边的空格
-  printf("str=%s=\n",str);    // 出输结果是str=西施  =
+  STRCPY(str, sizeof(str), "  西施  ");
+  DeleteLChar(str, ' ');  // 删除str左边的空格
+  printf("str=%s=\n", str);    // 出输结果是str=西施  =
 
-  STRCPY(str,sizeof(str),"  西施  ");
-  DeleteRChar(str,' ');  // 删除str右边的空格
-  printf("str=%s=\n",str);    // 出输结果是str=  西施=
+  STRCPY(str, sizeof(str), "  西施  ");
+  DeleteRChar(str, ' ');  // 删除str右边的空格
+  printf("str=%s=\n", str);    // 出输结果是str=  西施=
 
-  STRCPY(str,sizeof(str),"  西施  ");
-  DeleteLRChar(str,' ');  // 删除str两边的空格
-  printf("str=%s=\n",str);    // 出输结果是str=西施=
+  STRCPY(str, sizeof(str), "  西施  ");
+  DeleteLRChar(str, ' ');  // 删除str两边的空格
+  printf("str=%s=\n", str);    // 出输结果是str=西施=
 }
 

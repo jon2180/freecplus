@@ -4,20 +4,19 @@
 */
 #include "../_freecplus.h"
 
-int main()
-{
+int main() {
   char str[11];   // 字符串str的大小是11字节。
 
-  STRCPY(str,sizeof(str),"www");  
-  STRNCAT(str,sizeof(str),".free",10);  // str原有的内容加上待追加的内容没有超过str可以存放的大小。
-  printf("str=%s=\n",str);              // 出输结果是str=www.free=
+  STRCPY(str, sizeof(str), "www");
+  STRNCAT(str, sizeof(str), ".free", 10);  // str原有的内容加上待追加的内容没有超过str可以存放的大小。
+  printf("str=%s=\n", str);              // 出输结果是str=www.free=
 
-  STRCPY(str,sizeof(str),"www");  
-  STRNCAT(str,sizeof(str),".freecplus.net",6);  // str原有的内容加上待追加的内容没有超过str可以存放的大小。
-  printf("str=%s=\n",str);                      // 出输结果是str=www.freec=
+  STRCPY(str, sizeof(str), "www");
+  STRNCAT(str, sizeof(str), ".freecplus.net", 6);  // str原有的内容加上待追加的内容没有超过str可以存放的大小。
+  printf("str=%s=\n", str);                      // 出输结果是str=www.freec=
 
-  STRCPY(str,sizeof(str),"www");  
-  STRNCAT(str,sizeof(str),".freecplus.net",10); // str原有的内容加上待追加的内容超过了str可以存放的大小。
-  printf("str=%s=\n",str);                      // 出输结果是str=www.freecp=
+  STRCPY(str, sizeof(str), "www");
+  STRNCAT(str, sizeof(str), ".freecplus.net", 10); // str原有的内容加上待追加的内容超过了str可以存放的大小。
+  printf("str=%s=\n", str);                      // 出输结果是str=www.freecp=
 }
 

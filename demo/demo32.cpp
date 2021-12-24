@@ -4,18 +4,16 @@
 */
 #include "../_freecplus.h"
 
-int main()
-{
+int main() {
   CDir Dir;
 
-  if (Dir.OpenDir("/tmp/root","*.h,*cpp",100,true,true)==false)
-  { 
-    printf("Dir.OpenDir(/tmp/root) failed.\n"); return -1; 
+  if (Dir.OpenDir("/tmp/root", "*.h,*cpp", 100, true, true) == false) {
+	printf("Dir.OpenDir(/tmp/root) failed.\n");
+	return -1;
   }
 
-  while(Dir.ReadDir()==true)
-  {
-    printf("filename=%s,mtime=%s,size=%d\n",Dir.m_FullFileName,Dir.m_ModifyTime,Dir.m_FileSize);
+  while (Dir.ReadDir() == true) {
+	printf("filename=%s,mtime=%s,size=%d\n", Dir.m_FullFileName, Dir.m_ModifyTime, Dir.m_FileSize);
   }
 }
 

@@ -4,20 +4,19 @@
 */
 #include "../_freecplus.h"
 
-int main()
-{
+int main() {
   CTimer Timer;
 
-  printf("elapsed=%lf\n",Timer.Elapsed());
+  printf("elapsed=%lf\n", Timer.Elapsed());
   sleep(1);
-  printf("elapsed=%lf\n",Timer.Elapsed());
+  printf("elapsed=%lf\n", Timer.Elapsed());
   sleep(1);
-  printf("elapsed=%lf\n",Timer.Elapsed());
+  printf("elapsed=%lf\n", Timer.Elapsed());
   usleep(1000);
-  printf("elapsed=%lf\n",Timer.Elapsed());
+  printf("elapsed=%lf\n", Timer.Elapsed());
   usleep(100);
-  printf("elapsed=%lf\n",Timer.Elapsed());
+  printf("elapsed=%lf\n", Timer.Elapsed());
   sleep(10);
-  printf("elapsed=%lf\n",Timer.Elapsed());
+  printf("elapsed=%lf\n", Timer.Elapsed());
 }
 

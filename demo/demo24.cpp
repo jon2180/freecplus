@@ -4,20 +4,19 @@
 */
 #include "../_freecplus.h"
 
-int main()
-{
+int main() {
   char strtime[20];
-  memset(strtime,0,sizeof(strtime));
+  memset(strtime, 0, sizeof(strtime));
 
-  LocalTime(strtime,"yyyy-mm-dd hh24:mi:ss",-30);  // 获取30秒前的时间。
-  printf("strtime1=%s\n",strtime);
+  LocalTime(strtime, "yyyy-mm-dd hh24:mi:ss", -30);  // 获取30秒前的时间。
+  printf("strtime1=%s\n", strtime);
 
-  LocalTime(strtime,"yyyy-mm-dd hh24:mi:ss");      // 获取当前时间。
-  printf("strtime2=%s\n",strtime);
+  LocalTime(strtime, "yyyy-mm-dd hh24:mi:ss");      // 获取当前时间。
+  printf("strtime2=%s\n", strtime);
 
-  LocalTime(strtime,"yyyy-mm-dd hh24:mi:ss",30);   // 获取30秒后的时间。
-  printf("strtime3=%s\n",strtime);
+  LocalTime(strtime, "yyyy-mm-dd hh24:mi:ss", 30);   // 获取30秒后的时间。
+  printf("strtime3=%s\n", strtime);
 
-  printf("=%d\n",time(0));
+  printf("=%d\n", time(0));
 }
 

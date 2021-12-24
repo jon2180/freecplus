@@ -4,24 +4,23 @@
 */
 #include "../_freecplus.h"
 
-int main()
-{
-  FILE *fp=0;
+int main() {
+  FILE *fp = 0;
 
-  if ( (fp=FOPEN("/tmp/aaa/bbb/ccc/tmp.xml","r"))==0)
-  {
-    printf("FOPEN(/tmp/aaa/bbb/ccc/tmp.xml) %d:%s\n",errno,strerror(errno)); return -1;
+  if ((fp = FOPEN("/tmp/aaa/bbb/ccc/tmp.xml", "r")) == 0) {
+	printf("FOPEN(/tmp/aaa/bbb/ccc/tmp.xml) %d:%s\n", errno, strerror(errno));
+	return -1;
   }
 
   char strBuffer[301];
 
-  while (true)
-  {
-    memset(strBuffer,0,sizeof(strBuffer));
-    if (FGETS(fp,strBuffer,300)==false) break;     // 行内容以"\n"结束。
-    //if (FGETS(fp,strBuffer,300,"<endl/>")==false) break; // 行内容以"<endl/>"结束。
+  while (true) {
+	memset(strBuffer, 0, sizeof(strBuffer));
+	if (FGETS(fp, strBuffer, 300) == false)
+	  break;     // 行内容以"\n"结束。
+	//if (FGETS(fp,strBuffer,300,"<endl/>")==false) break; // 行内容以"<endl/>"结束。
 
-    printf("strBuffer=%s",strBuffer);
+	printf("strBuffer=%s", strBuffer);
   }
 
   fclose(fp);
