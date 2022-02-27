@@ -4,6 +4,8 @@
 
 #include <c_cmd_str.h>
 
+namespace freecplus {
+
 // 安全的strcpy函数。
 // dest：目标字符串，不需要初始化，在STRCPY函数中有初始化代码。
 // destlen：目标字符串dest占用内存的大小。
@@ -453,3 +455,5 @@ int Words(const char *str) {
 
   return wlen;
 }
+
+} // namespace freecplus

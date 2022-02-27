@@ -2,6 +2,8 @@
 
 #include <cstdio>
 
+namespace freecplus {
+
 using std::FILE;
 
 ///////////////////////////////////// /////////////////////////////////////
@@ -63,3 +65,5 @@ FILE *FOPEN(const char *filename, const char *mode);
 // endbz：行内容结束的标志，缺省为空，表示行内容以"\n"为结束标志。
 // 返回值：true-成功；false-失败，一般情况下，失败可以认为是文件已结束。
 bool FGETS(const FILE *fp, char *buffer, const int readsize, const char *endbz = 0);
+
+} // namespace freecplus

@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+namespace freecplus {
+
 using std::string;
 using std::vector;
 
@@ -48,3 +50,5 @@ public:
 
   ~CDir(); // 析构函数。
 };
+
+} // namespace freecplus

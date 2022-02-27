@@ -1,8 +1,10 @@
 /*
  *  程序名：demo45.cpp，此程序演示采用freecplus框架的CIniFile类加载参数文件。
  *  作者：C语言技术网(www.freecplus.net) 日期：20190525
-*/
-#include "../_freecplus.h"
+ */
+#include "freecplus.h"
+
+#include <cstring>
 
 // 用于存放本程序运行参数的数据结构。
 struct st_args {
@@ -17,16 +19,16 @@ struct st_args {
 int main(int argc, char *argv[]) {
   // 如果执行程序时输入的参数不正确，给出帮助信息。
   if (argc != 2) {
-	printf("\nusing:/freecplus/demo/demo45 inifile\n");
-	printf("samples:/freecplus/demo/demo45 /freecplus/ini/hssms.xml\n\n");
-	return -1;
+    printf("\nusing:/freecplus/demo/demo45 inifile\n");
+    printf("samples:/freecplus/demo/demo45 /freecplus/ini/hssms.xml\n\n");
+    return -1;
   }
 
   // 加载参数文件。
-  CIniFile IniFile;
+  freecplus::CIniFile IniFile;
   if (IniFile.LoadFile(argv[1]) == false) {
-	printf("IniFile.LoadFile(%s) failed.\n", argv[1]);
-	return -1;
+    printf("IniFile.LoadFile(%s) failed.\n", argv[1]);
+    return -1;
   }
 
   // 获取参数，存放在stargs结构中。
@@ -47,4 +49,3 @@ int main(int argc, char *argv[]) {
 
   // 以下可以写更多的主程序的代码。
 }
-

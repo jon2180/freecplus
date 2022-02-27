@@ -5,6 +5,8 @@
 #include "file.h"
 #include "util/xml_buffer.h"
 
+namespace freecplus {
+
 CIniFile::CIniFile() {}
 
 bool CIniFile::LoadFile(const char *filename) {
@@ -59,3 +61,5 @@ bool CIniFile::GetValue(const char *fieldname, unsigned long *value) {
 bool CIniFile::GetValue(const char *fieldname, double *value) {
   return GetXMLBuffer(m_xmlbuffer.c_str(), fieldname, value);
 }
+
+} // namespace freecplus

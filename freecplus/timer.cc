@@ -6,6 +6,8 @@
 
 #include <cstdio>
 
+namespace freecplus {
+
 CTimer::CTimer() {
   memset(&m_start, 0, sizeof(struct timeval));
   memset(&m_end, 0, sizeof(struct timeval));
@@ -40,3 +42,5 @@ double CTimer::Elapsed() {
 
   return dend - dstart;
 }
+
+} // namespace freecplus

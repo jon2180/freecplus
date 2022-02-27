@@ -3,6 +3,8 @@
 #include <signal.h>
 #include <unistd.h>
 
+namespace freecplus {
+
 // 关闭全部的信号和输入输出
 void CloseIOAndSignal() {
   int ii = 0;
@@ -12,3 +14,5 @@ void CloseIOAndSignal() {
     close(ii);
   }
 }
+
+} // namespace freecplus

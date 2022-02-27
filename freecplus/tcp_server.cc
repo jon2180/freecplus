@@ -7,6 +7,8 @@
 
 #include "util/socket_util.h"
 
+namespace freecplus {
+
 CTcpServer::CTcpServer() {
   m_listenfd = -1;
   m_connfd = -1;
@@ -137,3 +139,5 @@ CTcpServer::~CTcpServer() {
   CloseListen();
   CloseClient();
 }
+
+} // namespace freecplus

@@ -8,6 +8,8 @@
 
 #include "util/socket_util.h"
 
+namespace freecplus {
+
 CTcpClient::CTcpClient() {
   m_sockfd = -1;
   memset(m_ip, 0, sizeof(m_ip));
@@ -119,3 +121,5 @@ void CTcpClient::Close() {
 }
 
 CTcpClient::~CTcpClient() { Close(); }
+
+} // namespace freecplus

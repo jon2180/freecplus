@@ -10,6 +10,8 @@
 #include "dir_util.h"
 #include "time_util.h"
 
+namespace freecplus {
+
 // 删除目录中的文件，类似Linux系统的rm命令。
 // filename：待删除的文件名，建议采用绝对路径的文件名，例如/tmp/root/data.xml。
 // times：执行删除文件的次数，缺省是1，建议不要超过3，从实际应用的经验看来，如果删除文件第1次不成功，再尝试
@@ -226,3 +228,5 @@ bool FGETS(const FILE *fp, char *buffer, const int readsize, const char *endbz) 
 
   return false;
 }
+
+} // namespace freecplus

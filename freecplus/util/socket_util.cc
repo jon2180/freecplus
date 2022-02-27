@@ -7,6 +7,8 @@
 
 #include "file_util.h"
 
+namespace freecplus {
+
 bool TcpRead(const int sockfd, char *buffer, int *ibuflen, const int itimeout) {
   if (sockfd == -1)
     return false;
@@ -246,3 +248,5 @@ bool RecvFile(int sockfd, struct st_fileinfo *stfileinfo, CLogFile *logfile) {
 
   return true;
 }
+
+} // namespace freecplus

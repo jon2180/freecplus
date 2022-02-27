@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+namespace freecplus {
+
 using std::string;
 using std::vector;
 
@@ -40,3 +42,5 @@ public:
   ~CCmdStr(); // 析构函数。
 };
 ///////////////////////////////////// /////////////////////////////////////
+
+} // namespace freecplus

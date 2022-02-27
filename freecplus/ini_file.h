@@ -2,6 +2,8 @@
 
 #include <string>
 
+namespace freecplus {
+
 using std::string;
 // 参数文件操作类。
 // CIniFile类操作的不是传统的ini文件，是xml格式的参数文件，例如：
@@ -52,3 +54,5 @@ public:
   bool GetValue(const char *fieldname, double *value);
   bool GetValue(const char *fieldname, char *value, const int ilen = 0);
 };
+
+} // namespace freecplus

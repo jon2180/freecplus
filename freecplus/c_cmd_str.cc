@@ -4,6 +4,8 @@
 
 #include "util/string_util.h"
 
+namespace freecplus {
+
 CCmdStr::CCmdStr() { m_vCmdStr.clear(); }
 
 // 把字符串拆分到m_vCmdStr容器中。
@@ -168,3 +170,5 @@ bool CCmdStr::GetValue(const int inum, bool *value) {
 }
 
 CCmdStr::~CCmdStr() { m_vCmdStr.clear(); }
+
+} // namespace freecplus

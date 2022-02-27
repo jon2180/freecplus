@@ -5,6 +5,8 @@
 #include "util/file_util.h"
 #include "util/string_util.h"
 
+namespace freecplus {
+
 CFile::CFile() // 类的构造函数
 {
   m_fp = 0;
@@ -180,3 +182,5 @@ size_t CFile::Fwrite(const void *ptr, size_t size) {
 
   return tt;
 }
+
+} // namespace freecplus

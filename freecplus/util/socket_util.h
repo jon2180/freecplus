@@ -2,6 +2,8 @@
 
 #include "log_file.h"
 
+namespace freecplus {
+
 // 文件信息的数据结构
 // 全路径文件名，大小，时间的结构体
 struct st_fileinfo {
@@ -58,3 +60,5 @@ bool SendFile(int sockfd, struct st_fileinfo *stfileinfo, CLogFile *logfile = 0)
 // 返回值：true-成功；false-接收失败，失败的原因有两种：1）sockfd不可用，2）待发送的文件不存在或权限不足。
 bool RecvFile(int sockfd, struct st_fileinfo *stfileinfo, CLogFile *logfile = 0);
 ///////////////////////////////////// /////////////////////////////////////
+
+} // namespace freecplus

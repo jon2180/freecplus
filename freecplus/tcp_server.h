@@ -2,6 +2,8 @@
 
 #include <netinet/in.h>
 
+namespace freecplus {
+
 // socket通信的服务端类
 class CTcpServer {
 private:
@@ -49,3 +51,5 @@ public:
 
   ~CTcpServer(); // 析构函数自动关闭socket，释放资源。
 };
+
+} // namespace freecplus

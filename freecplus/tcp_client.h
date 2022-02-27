@@ -1,5 +1,7 @@
 #pragma once
 
+namespace freecplus {
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // 以下是socket通信的函数和类
 
@@ -37,3 +39,5 @@ public:
 
   ~CTcpClient(); // 析构函数自动关闭socket，释放资源。
 };
+
+} // namespace freecplus

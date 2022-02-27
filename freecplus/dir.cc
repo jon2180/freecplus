@@ -8,6 +8,8 @@
 #include "util/dir_util.h"
 #include "util/string_util.h"
 
+namespace freecplus {
+
 CDir::CDir() {
   m_pos = 0;
 
@@ -208,3 +210,5 @@ CDir::~CDir() {
 
   // m_vDirName.clear();
 }
+
+} // namespace freecplus

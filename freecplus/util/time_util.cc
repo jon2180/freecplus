@@ -1,10 +1,12 @@
-#include "time.h"
+#include "time_util.h"
 
 #include <cstdio>
 #include <cstring>
 #include <ctime>
 
 #include "string_util.h"
+
+namespace freecplus {
 
 // 把整数表示的时间转换为字符串表示的时间。
 // ltime：整数表示的时间。
@@ -190,3 +192,5 @@ bool AddTime(const char *in_stime, char *out_stime, const int timetvl, const cha
 
   return true;
 }
+
+} // namespace freecplus

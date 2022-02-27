@@ -8,6 +8,8 @@
 #include "file.h"
 #include "time.h"
 
+namespace freecplus {
+
 CLogFile::CLogFile(const long MaxLogSize) {
   m_tracefp = 0;
   memset(m_filename, 0, sizeof(m_filename));
@@ -129,3 +131,5 @@ bool CLogFile::WriteEx(const char *fmt, ...) {
 
   return true;
 }
+
+} // namespace freecplus

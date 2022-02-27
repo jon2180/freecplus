@@ -1,5 +1,6 @@
 #pragma once
 
+namespace freecplus {
 ///////////////////////////////////// /////////////////////////////////////
 // 解析xml格式字符串的函数族。
 // xml格式的字符串的内容如下：
@@ -19,3 +20,5 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, unsigned long *v
 bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, double *value);
 bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, char *value, const int ilen = 0);
 ///////////////////////////////////// /////////////////////////////////////
+
+} // namespace freecplus

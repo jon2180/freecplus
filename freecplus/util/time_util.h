@@ -2,6 +2,8 @@
 
 #include <ctime>
 
+namespace freecplus {
+
 ///////////////////////////////////// /////////////////////////////////////
 /*
   取操作系统的时间。
@@ -47,3 +49,5 @@ time_t strtotime(const char *stime);
 // 返回值：true-成功，false-失败，如果返回失败，可以认为是in_stime的格式不正确。
 bool AddTime(const char *in_stime, char *out_stime, const int timetvl, const char *fmt = 0);
 ///////////////////////////////////// /////////////////////////////////////
+
+} // namespace freecplus

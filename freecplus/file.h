@@ -2,6 +2,8 @@
 
 #include <cstdio>
 
+namespace freecplus {
+
 using std::FILE;
 
 ///////////////////////////////////// /////////////////////////////////////
@@ -70,3 +72,5 @@ public:
 
   ~CFile(); // 析构函数会调用Close方法。
 };
+
+} // namespace freecplus

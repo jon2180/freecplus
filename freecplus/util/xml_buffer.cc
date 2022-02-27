@@ -7,6 +7,8 @@
 
 #include "util/string_util.h"
 
+namespace freecplus {
+
 bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, char *value, const int ilen) {
   if (value == 0)
     return false;
@@ -162,3 +164,5 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, double *value) {
 
   return false;
 }
+
+} // namespace freecplus

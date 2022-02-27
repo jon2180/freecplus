@@ -3,6 +3,8 @@
 #include <cstddef>
 #include <string>
 
+namespace freecplus {
+
 using std::string;
 
 ///////////////////////////////////// /////////////////////////////////////
@@ -117,3 +119,5 @@ bool MatchFileName(const string in_FileName, const string in_MatchStr);
 // 返回值：字符串str的字数。
 int Words(const char *str);
 ///////////////////////////////////// /////////////////////////////////////
+
+} // namespace freecplus
