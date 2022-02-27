@@ -10,12 +10,12 @@ using std::FILE;
 // 日志文件操作类
 class CLogFile {
 public:
-  FILE *m_tracefp;           // 日志文件指针。
-  char m_filename[301];     // 日志文件名，建议采用绝对路径。
-  char m_openmode[11];      // 日志文件的打开方式，一般采用"a+"。
-  bool m_bEnBuffer;         // 写入日志时，是否启用操作系统的缓冲机制，缺省不启用。
-  long m_MaxLogSize;        // 最大日志文件的大小，单位M，缺省100M。
-  bool m_bBackup;           // 是否自动切换，日志文件大小超过m_MaxLogSize将自动切换，缺省启用。
+  FILE *m_tracefp;      // 日志文件指针。
+  char m_filename[301]; // 日志文件名，建议采用绝对路径。
+  char m_openmode[11];  // 日志文件的打开方式，一般采用"a+"。
+  bool m_bEnBuffer;     // 写入日志时，是否启用操作系统的缓冲机制，缺省不启用。
+  long m_MaxLogSize;    // 最大日志文件的大小，单位M，缺省100M。
+  bool m_bBackup;       // 是否自动切换，日志文件大小超过m_MaxLogSize将自动切换，缺省启用。
 
   // 构造函数。
   // MaxLogSize：最大日志文件的大小，单位M，缺省100M，最小为10M。
@@ -41,6 +41,6 @@ public:
   // 关闭日志文件
   void Close();
 
-  ~CLogFile();  // 析构函数会调用Close方法。
+  ~CLogFile(); // 析构函数会调用Close方法。
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////

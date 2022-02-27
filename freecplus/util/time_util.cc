@@ -1,8 +1,8 @@
 #include "time.h"
 
-#include <ctime>
-#include <cstring>
 #include <cstdio>
+#include <cstring>
+#include <ctime>
 
 #include "string_util.h"
 
@@ -12,7 +12,7 @@
 // fmt：输出字符串时间stime的格式，与LocalTime函数的fmt参数相同，如果fmt的格式不正确，stime将为空。
 void timetostr(const time_t ltime, char *stime, const char *fmt) {
   if (stime == 0)
-	return;
+    return;
 
   strcpy(stime, "");
 
@@ -22,85 +22,76 @@ void timetostr(const time_t ltime, char *stime, const char *fmt) {
   sttm.tm_mon++;
 
   if (fmt == 0) {
-	snprintf(stime, 20, "%04u-%02u-%02u %02u:%02u:%02u", sttm.tm_year,
-			 sttm.tm_mon, sttm.tm_mday, sttm.tm_hour,
-			 sttm.tm_min, sttm.tm_sec);
-	return;
+    snprintf(stime, 20, "%04u-%02u-%02u %02u:%02u:%02u", sttm.tm_year, sttm.tm_mon, sttm.tm_mday, sttm.tm_hour,
+             sttm.tm_min, sttm.tm_sec);
+    return;
   }
 
   if (strcmp(fmt, "yyyy-mm-dd hh24:mi:ss") == 0) {
-	snprintf(stime, 20, "%04u-%02u-%02u %02u:%02u:%02u", sttm.tm_year,
-			 sttm.tm_mon, sttm.tm_mday, sttm.tm_hour,
-			 sttm.tm_min, sttm.tm_sec);
-	return;
+    snprintf(stime, 20, "%04u-%02u-%02u %02u:%02u:%02u", sttm.tm_year, sttm.tm_mon, sttm.tm_mday, sttm.tm_hour,
+             sttm.tm_min, sttm.tm_sec);
+    return;
   }
 
   if (strcmp(fmt, "yyyy-mm-dd hh24:mi") == 0) {
-	snprintf(stime, 17, "%04u-%02u-%02u %02u:%02u", sttm.tm_year,
-			 sttm.tm_mon, sttm.tm_mday, sttm.tm_hour,
-			 sttm.tm_min);
-	return;
+    snprintf(stime, 17, "%04u-%02u-%02u %02u:%02u", sttm.tm_year, sttm.tm_mon, sttm.tm_mday, sttm.tm_hour, sttm.tm_min);
+    return;
   }
 
   if (strcmp(fmt, "yyyy-mm-dd hh24") == 0) {
-	snprintf(stime, 14, "%04u-%02u-%02u %02u", sttm.tm_year,
-			 sttm.tm_mon, sttm.tm_mday, sttm.tm_hour);
-	return;
+    snprintf(stime, 14, "%04u-%02u-%02u %02u", sttm.tm_year, sttm.tm_mon, sttm.tm_mday, sttm.tm_hour);
+    return;
   }
 
   if (strcmp(fmt, "yyyy-mm-dd") == 0) {
-	snprintf(stime, 11, "%04u-%02u-%02u", sttm.tm_year, sttm.tm_mon, sttm.tm_mday);
-	return;
+    snprintf(stime, 11, "%04u-%02u-%02u", sttm.tm_year, sttm.tm_mon, sttm.tm_mday);
+    return;
   }
 
   if (strcmp(fmt, "yyyy-mm") == 0) {
-	snprintf(stime, 8, "%04u-%02u", sttm.tm_year, sttm.tm_mon);
-	return;
+    snprintf(stime, 8, "%04u-%02u", sttm.tm_year, sttm.tm_mon);
+    return;
   }
 
   if (strcmp(fmt, "yyyymmddhh24miss") == 0) {
-	snprintf(stime, 15, "%04u%02u%02u%02u%02u%02u", sttm.tm_year,
-			 sttm.tm_mon, sttm.tm_mday, sttm.tm_hour,
-			 sttm.tm_min, sttm.tm_sec);
-	return;
+    snprintf(stime, 15, "%04u%02u%02u%02u%02u%02u", sttm.tm_year, sttm.tm_mon, sttm.tm_mday, sttm.tm_hour, sttm.tm_min,
+             sttm.tm_sec);
+    return;
   }
 
   if (strcmp(fmt, "yyyymmddhh24mi") == 0) {
-	snprintf(stime, 13, "%04u%02u%02u%02u%02u", sttm.tm_year,
-			 sttm.tm_mon, sttm.tm_mday, sttm.tm_hour,
-			 sttm.tm_min);
-	return;
+    snprintf(stime, 13, "%04u%02u%02u%02u%02u", sttm.tm_year, sttm.tm_mon, sttm.tm_mday, sttm.tm_hour, sttm.tm_min);
+    return;
   }
 
   if (strcmp(fmt, "yyyymmddhh24") == 0) {
-	snprintf(stime, 11, "%04u%02u%02u%02u", sttm.tm_year,
-			 sttm.tm_mon, sttm.tm_mday, sttm.tm_hour);
-	return;
+    snprintf(stime, 11, "%04u%02u%02u%02u", sttm.tm_year, sttm.tm_mon, sttm.tm_mday, sttm.tm_hour);
+    return;
   }
 
   if (strcmp(fmt, "yyyymmdd") == 0) {
-	snprintf(stime, 9, "%04u%02u%02u", sttm.tm_year, sttm.tm_mon, sttm.tm_mday);
-	return;
+    snprintf(stime, 9, "%04u%02u%02u", sttm.tm_year, sttm.tm_mon, sttm.tm_mday);
+    return;
   }
 
   if (strcmp(fmt, "hh24miss") == 0) {
-	snprintf(stime, 7, "%02u%02u%02u", sttm.tm_hour, sttm.tm_min, sttm.tm_sec);
-	return;
+    snprintf(stime, 7, "%02u%02u%02u", sttm.tm_hour, sttm.tm_min, sttm.tm_sec);
+    return;
   }
 
   if (strcmp(fmt, "hh24mi") == 0) {
-	snprintf(stime, 5, "%02u%02u", sttm.tm_hour, sttm.tm_min);
-	return;
+    snprintf(stime, 5, "%02u%02u", sttm.tm_hour, sttm.tm_min);
+    return;
   }
 
   if (strcmp(fmt, "hh24") == 0) {
-	snprintf(stime, 3, "%02u", sttm.tm_hour);
-	return;
+    snprintf(stime, 3, "%02u", sttm.tm_hour);
+    return;
   }
 
   if (strcmp(fmt, "mi") == 0) {
-	snprintf(stime, 3, "%02u", sttm.tm_min);
-	return;
+    snprintf(stime, 3, "%02u", sttm.tm_min);
+    return;
   }
 }
 
@@ -126,7 +117,7 @@ void timetostr(const time_t ltime, char *stime, const char *fmt) {
 */
 void LocalTime(char *stime, const char *fmt, const int timetvl) {
   if (stime == 0)
-	return;
+    return;
 
   time_t timer;
 
@@ -135,8 +126,6 @@ void LocalTime(char *stime, const char *fmt, const int timetvl) {
 
   timetostr(timer, stime, fmt);
 }
-
-
 
 // 把字符串表示的时间转换为整数表示的时间。
 // stime：字符串表示的时间，格式不限，但一定要包括yyyymmddhh24miss，一个都不能少。
@@ -154,7 +143,7 @@ time_t strtotime(const char *stime) {
   PickNumber(stime, strtime, false, false);
 
   if (strlen(strtime) != 14)
-	return -1;
+    return -1;
 
   strncpy(yyyy, strtime, 4);
   strncpy(mm, strtime + 4, 2);
@@ -185,12 +174,12 @@ time_t strtotime(const char *stime) {
 // 返回值：true-成功，false-失败，如果返回失败，可以认为是in_stime的格式不正确。
 bool AddTime(const char *in_stime, char *out_stime, const int timetvl, const char *fmt) {
   if ((in_stime == 0) || (out_stime == 0))
-	return false;
+    return false;
 
   time_t timer;
   if ((timer = strtotime(in_stime)) == -1) {
-	strcpy(out_stime, "");
-	return false;
+    strcpy(out_stime, "");
+    return false;
   }
 
   timer = timer + timetvl;

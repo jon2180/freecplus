@@ -1,11 +1,11 @@
 #include "file_util.h"
 
 #include <cstring> // strncpy strlen
-#include <unistd.h> // access
-#include <sys/stat.h>
-#include <sys/types.h>  // mkdir
 #include <fcntl.h> // open
-#include <utime.h> // utimbuf
+#include <sys/stat.h>
+#include <sys/types.h> // mkdir
+#include <unistd.h>    // access
+#include <utime.h>     // utimbuf
 
 #include "dir_util.h"
 #include "time_util.h"
@@ -19,13 +19,13 @@
 bool REMOVE(const char *filename, const int times) {
   // 如果文件不存在，直接返回失败
   if (access(filename, R_OK) != 0)
-	return false;
+    return false;
 
   for (int ii = 0; ii < times; ii++) {
-	if (remove(filename) == 0)
-	  return true;
+    if (remove(filename) == 0)
+      return true;
 
-	usleep(100000);
+    usleep(100000);
   }
 
   return false;
@@ -43,22 +43,20 @@ bool REMOVE(const char *filename, const int times) {
 bool RENAME(const char *srcfilename, const char *dstfilename, const int times) {
   // 如果文件不存在，直接返回失败
   if (access(srcfilename, R_OK) != 0)
-	return false;
+    return false;
 
   if (MKDIR(dstfilename) == false)
-	return false;
+    return false;
 
   for (int ii = 0; ii < times; ii++) {
-	if (rename(srcfilename, dstfilename) == 0)
-	  return true;
+    if (rename(srcfilename, dstfilename) == 0)
+      return true;
 
-	usleep(100000);
+    usleep(100000);
   }
 
   return false;
 }
-
-
 
 // 复制文件，类似Linux系统的cp命令。
 // srcfilename：原文件名，建议采用绝对路径的文件名。
@@ -70,7 +68,7 @@ bool RENAME(const char *srcfilename, const char *dstfilename, const int times) {
 // 3）复制后的文件的时间与原文件相同，这一点与Linux系统cp命令不同。
 bool COPY(const char *srcfilename, const char *dstfilename) {
   if (MKDIR(dstfilename) == false)
-	return false;
+    return false;
 
   char strdstfilenametmp[301];
   memset(strdstfilenametmp, 0, sizeof(strdstfilenametmp));
@@ -88,30 +86,30 @@ bool COPY(const char *srcfilename, const char *dstfilename) {
   char buffer[5000];
 
   if ((srcfd = open(srcfilename, O_RDONLY)) < 0)
-	return false;
+    return false;
 
   if ((dstfd = open(strdstfilenametmp, O_WRONLY | O_CREAT | O_TRUNC, S_IWUSR | S_IRUSR | S_IXUSR)) < 0) {
-	close(srcfd);
-	return false;
+    close(srcfd);
+    return false;
   }
 
   while (true) {
-	memset(buffer, 0, sizeof(buffer));
+    memset(buffer, 0, sizeof(buffer));
 
-	if ((iFileSize - total_bytes) > 5000)
-	  onread = 5000;
-	else
-	  onread = iFileSize - total_bytes;
+    if ((iFileSize - total_bytes) > 5000)
+      onread = 5000;
+    else
+      onread = iFileSize - total_bytes;
 
-	bytes = read(srcfd, buffer, onread);
+    bytes = read(srcfd, buffer, onread);
 
-	if (bytes > 0)
-	  write(dstfd, buffer, bytes);
+    if (bytes > 0)
+      write(dstfd, buffer, bytes);
 
-	total_bytes = total_bytes + bytes;
+    total_bytes = total_bytes + bytes;
 
-	if (total_bytes == iFileSize)
-	  break;
+    if (total_bytes == iFileSize)
+      break;
   }
 
   close(srcfd);
@@ -125,13 +123,12 @@ bool COPY(const char *srcfilename, const char *dstfilename) {
   UTime(strdstfilenametmp, strmtime);
 
   if (RENAME(strdstfilenametmp, dstfilename) == false) {
-	REMOVE(strdstfilenametmp);
-	return false;
+    REMOVE(strdstfilenametmp);
+    return false;
   }
 
   return true;
 }
-
 
 // 获取文件的大小。
 // filename：待获取的文件名，建议采用绝对路径的文件名。
@@ -140,11 +137,10 @@ int FileSize(const char *filename) {
   struct stat st_filestat;
 
   if (stat(filename, &st_filestat) < 0)
-	return -1;
+    return -1;
 
   return st_filestat.st_size;
 }
-
 
 // 获取文件的时间。
 // filename：待获取的文件名，建议采用绝对路径的文件名。
@@ -156,21 +152,19 @@ bool FileMTime(const char *filename, char *mtime, const char *fmt) {
   struct stat st_filestat;
 
   if (stat(filename, &st_filestat) < 0)
-	return false;
+    return false;
 
   char strfmt[25];
   memset(strfmt, 0, sizeof(strfmt));
   if (fmt == 0)
-	strcpy(strfmt, "yyyymmddhh24miss");
+    strcpy(strfmt, "yyyymmddhh24miss");
   else
-	strcpy(strfmt, fmt);
+    strcpy(strfmt, fmt);
 
   timetostr(st_filestat.st_mtime, mtime, strfmt);
 
   return true;
 }
-
-
 
 // 重置文件的修改时间属性。
 // filename：待重置的文件名，建议采用绝对路径的文件名。
@@ -182,7 +176,7 @@ bool UTime(const char *filename, const char *mtime) {
   stutimbuf.actime = stutimbuf.modtime = strtotime(mtime);
 
   if (utime(filename, &stutimbuf) != 0)
-	return false;
+    return false;
 
   return true;
 }
@@ -193,11 +187,10 @@ bool UTime(const char *filename, const char *mtime) {
 // 在应用开发中，用FOPEN函数代替fopen库函数。
 FILE *FOPEN(const char *filename, const char *mode) {
   if (MKDIR(filename) == false)
-	return 0;
+    return 0;
 
   return fopen(filename, mode);
 }
-
 
 // 从文本文件中读取一行。
 // fp：已打开的文件指针。
@@ -207,30 +200,29 @@ FILE *FOPEN(const char *filename, const char *mode) {
 // 返回值：true-成功；false-失败，一般情况下，失败可以认为是文件已结束。
 bool FGETS(const FILE *fp, char *buffer, const int readsize, const char *endbz) {
   if (fp == 0)
-	return false;
+    return false;
 
-  memset(buffer, 0, readsize + 1);   // 调用者必须保证buffer的空间足够，否则这里会内存溢出。
+  memset(buffer, 0, readsize + 1); // 调用者必须保证buffer的空间足够，否则这里会内存溢出。
 
   char strline[readsize + 1];
 
   while (true) {
-	memset(strline, 0, sizeof(strline));
+    memset(strline, 0, sizeof(strline));
 
-	if (fgets(strline, readsize, (FILE *)fp) == 0)
-	  break;
+    if (fgets(strline, readsize, (FILE *)fp) == 0)
+      break;
 
-	// 防止buffer溢出
-	if ((strlen(buffer) + strlen(strline)) >= (unsigned int)readsize)
-	  break;
+    // 防止buffer溢出
+    if ((strlen(buffer) + strlen(strline)) >= (unsigned int)readsize)
+      break;
 
-	strcat(buffer, strline);
+    strcat(buffer, strline);
 
-	if (endbz == 0)
-	  return true;
-	else if (strstr(strline, endbz) != 0)
-	  return true;
+    if (endbz == 0)
+      return true;
+    else if (strstr(strline, endbz) != 0)
+      return true;
   }
 
   return false;
 }
-

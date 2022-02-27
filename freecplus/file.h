@@ -10,15 +10,15 @@ using std::FILE;
 // 文件操作类声明
 class CFile {
 private:
-  FILE *m_fp;        // 文件指针
-  bool m_bEnBuffer; // 是否启用缓冲，true-启用；false-不启用，缺省是启用。
-  char m_filename[301]; // 文件名，建议采用绝对路径的文件名。
+  FILE *m_fp;              // 文件指针
+  bool m_bEnBuffer;        // 是否启用缓冲，true-启用；false-不启用，缺省是启用。
+  char m_filename[301];    // 文件名，建议采用绝对路径的文件名。
   char m_filenametmp[301]; // 临时文件名，在m_filename后加".tmp"。
 
 public:
-  CFile();   // 构造函数。
+  CFile(); // 构造函数。
 
-  bool IsOpened();  // 判断文件是否已打开，返回值：true-已打开；false-未打开。
+  bool IsOpened(); // 判断文件是否已打开，返回值：true-已打开；false-未打开。
 
   // 打开文件。
   // filename：待打开的文件名，建议采用绝对路径的文件名。
@@ -68,5 +68,5 @@ public:
   // 关闭文件指针，如果存在临时文件，就删除它。
   void Close();
 
-  ~CFile();   // 析构函数会调用Close方法。
+  ~CFile(); // 析构函数会调用Close方法。
 };

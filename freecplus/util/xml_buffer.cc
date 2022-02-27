@@ -1,18 +1,18 @@
 
 #include "xml_buffer.h"
 
-#include <cstring>
 #include <cstdio>
 #include <cstdlib>
+#include <cstring>
 
 #include "util/string_util.h"
 
 bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, char *value, const int ilen) {
   if (value == 0)
-	return false;
+    return false;
 
   if (ilen > 0)
-	memset(value, 0, ilen + 1);   // 调用者必须保证value的空间足够，否则这里会内存溢出。
+    memset(value, 0, ilen + 1); // 调用者必须保证value的空间足够，否则这里会内存溢出。
 
   char *start = 0, *end = 0;
   char m_SFieldName[51], m_EFieldName[51];
@@ -30,21 +30,21 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, char *value, con
   start = (char *)strstr(xmlbuffer, m_SFieldName);
 
   if (start != 0) {
-	end = (char *)strstr(start, m_EFieldName);
+    end = (char *)strstr(start, m_EFieldName);
   }
 
   if ((start == 0) || (end == 0)) {
-	return false;
+    return false;
   }
 
   int m_ValueLen = end - start - m_NameLen - 2 + 1;
 
   if (((m_ValueLen - 1) <= ilen) || (ilen == 0)) {
-	strncpy(value, start + m_NameLen + 2, m_ValueLen - 1);
-	value[m_ValueLen - 1] = 0;
+    strncpy(value, start + m_NameLen + 2, m_ValueLen - 1);
+    value[m_ValueLen - 1] = 0;
   } else {
-	strncpy(value, start + m_NameLen + 2, ilen);
-	value[ilen] = 0;
+    strncpy(value, start + m_NameLen + 2, ilen);
+    value[ilen] = 0;
   }
 
   DeleteLRChar(value, ' ');
@@ -54,7 +54,7 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, char *value, con
 
 bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, bool *value) {
   if (value == 0)
-	return false;
+    return false;
 
   (*value) = false;
 
@@ -63,11 +63,11 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, bool *value) {
   memset(strTemp, 0, sizeof(strTemp));
 
   if (GetXMLBuffer(xmlbuffer, fieldname, strTemp, 10) == true) {
-	ToUpper(strTemp);  // 转换为大写来判断。
-	if (strcmp(strTemp, "TRUE") == 0) {
-	  (*value) = true;
-	  return true;
-	}
+    ToUpper(strTemp); // 转换为大写来判断。
+    if (strcmp(strTemp, "TRUE") == 0) {
+      (*value) = true;
+      return true;
+    }
   }
 
   return false;
@@ -75,7 +75,7 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, bool *value) {
 
 bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, int *value) {
   if (value == 0)
-	return false;
+    return false;
 
   (*value) = 0;
 
@@ -84,8 +84,8 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, int *value) {
   memset(strTemp, 0, sizeof(strTemp));
 
   if (GetXMLBuffer(xmlbuffer, fieldname, strTemp, 50) == true) {
-	(*value) = atoi(strTemp);
-	return true;
+    (*value) = atoi(strTemp);
+    return true;
   }
 
   return false;
@@ -93,7 +93,7 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, int *value) {
 
 bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, unsigned int *value) {
   if (value == 0)
-	return false;
+    return false;
 
   (*value) = 0;
 
@@ -102,8 +102,8 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, unsigned int *va
   memset(strTemp, 0, sizeof(strTemp));
 
   if (GetXMLBuffer(xmlbuffer, fieldname, strTemp, 50) == true) {
-	(*value) = (unsigned int)atoi(strTemp);
-	return true;
+    (*value) = (unsigned int)atoi(strTemp);
+    return true;
   }
 
   return false;
@@ -111,7 +111,7 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, unsigned int *va
 
 bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, long *value) {
   if (value == 0)
-	return false;
+    return false;
 
   (*value) = 0;
 
@@ -120,8 +120,8 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, long *value) {
   memset(strTemp, 0, sizeof(strTemp));
 
   if (GetXMLBuffer(xmlbuffer, fieldname, strTemp, 50) == true) {
-	(*value) = atol(strTemp);
-	return true;
+    (*value) = atol(strTemp);
+    return true;
   }
 
   return false;
@@ -129,7 +129,7 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, long *value) {
 
 bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, unsigned long *value) {
   if (value == 0)
-	return false;
+    return false;
 
   (*value) = 0;
 
@@ -138,8 +138,8 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, unsigned long *v
   memset(strTemp, 0, sizeof(strTemp));
 
   if (GetXMLBuffer(xmlbuffer, fieldname, strTemp, 50) == true) {
-	(*value) = (unsigned long)atol(strTemp);
-	return true;
+    (*value) = (unsigned long)atol(strTemp);
+    return true;
   }
 
   return false;
@@ -147,7 +147,7 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, unsigned long *v
 
 bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, double *value) {
   if (value == 0)
-	return false;
+    return false;
 
   (*value) = 0;
 
@@ -156,8 +156,8 @@ bool GetXMLBuffer(const char *xmlbuffer, const char *fieldname, double *value) {
   memset(strTemp, 0, sizeof(strTemp));
 
   if (GetXMLBuffer(xmlbuffer, fieldname, strTemp, 50) == true) {
-	(*value) = atof(strTemp);
-	return true;
+    (*value) = atof(strTemp);
+    return true;
   }
 
   return false;

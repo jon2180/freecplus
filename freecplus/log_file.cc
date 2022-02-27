@@ -16,17 +16,15 @@ CLogFile::CLogFile(const long MaxLogSize) {
   m_bEnBuffer = false;
   m_MaxLogSize = MaxLogSize;
   if (m_MaxLogSize < 10)
-	m_MaxLogSize = 10;
+    m_MaxLogSize = 10;
 }
 
-CLogFile::~CLogFile() {
-  Close();
-}
+CLogFile::~CLogFile() { Close(); }
 
 void CLogFile::Close() {
   if (m_tracefp != 0) {
-	fclose(m_tracefp);
-	m_tracefp = 0;
+    fclose(m_tracefp);
+    m_tracefp = 0;
   }
 
   memset(m_filename, 0, sizeof(m_filename));
@@ -48,12 +46,12 @@ bool CLogFile::Open(const char *filename, const char *openmode, bool bBackup, bo
   m_bEnBuffer = bEnBuffer;
   m_bBackup = bBackup;
   if (openmode == 0)
-	strcpy(m_openmode, "a+");
+    strcpy(m_openmode, "a+");
   else
-	strcpy(m_openmode, openmode);
+    strcpy(m_openmode, openmode);
 
   if ((m_tracefp = FOPEN(m_filename, m_openmode)) == 0)
-	return false;
+    return false;
 
   return true;
 }
@@ -63,29 +61,29 @@ bool CLogFile::Open(const char *filename, const char *openmode, bool bBackup, bo
 // 注意，在多进程的程序中，日志文件不可切换，多线的程序中，日志文件可以切换。
 bool CLogFile::BackupLogFile() {
   if (m_tracefp == 0)
-	return false;
+    return false;
 
   // 不备份
   if (m_bBackup == false)
-	return true;
+    return true;
 
   fseek(m_tracefp, 0L, 2);
 
   if (ftell(m_tracefp) > m_MaxLogSize * 1024 * 1024) {
-	fclose(m_tracefp);
-	m_tracefp = 0;
+    fclose(m_tracefp);
+    m_tracefp = 0;
 
-	char strLocalTime[21];
-	memset(strLocalTime, 0, sizeof(strLocalTime));
-	LocalTime(strLocalTime, "yyyymmddhh24miss");
+    char strLocalTime[21];
+    memset(strLocalTime, 0, sizeof(strLocalTime));
+    LocalTime(strLocalTime, "yyyymmddhh24miss");
 
-	char bak_filename[301];
-	memset(bak_filename, 0, sizeof(bak_filename));
-	snprintf(bak_filename, 300, "%s.%s", m_filename, strLocalTime);
-	rename(m_filename, bak_filename);
+    char bak_filename[301];
+    memset(bak_filename, 0, sizeof(bak_filename));
+    snprintf(bak_filename, 300, "%s.%s", m_filename, strLocalTime);
+    rename(m_filename, bak_filename);
 
-	if ((m_tracefp = FOPEN(m_filename, m_openmode)) == 0)
-	  return false;
+    if ((m_tracefp = FOPEN(m_filename, m_openmode)) == 0)
+      return false;
   }
 
   return true;
@@ -95,10 +93,10 @@ bool CLogFile::BackupLogFile() {
 // Write方法会写入当前的时间，WriteEx方法不写时间。
 bool CLogFile::Write(const char *fmt, ...) {
   if (m_tracefp == 0)
-	return false;
+    return false;
 
   if (BackupLogFile() == false)
-	return false;
+    return false;
 
   char strtime[20];
   LocalTime(strtime);
@@ -110,7 +108,7 @@ bool CLogFile::Write(const char *fmt, ...) {
   va_end(ap);
 
   if (m_bEnBuffer == false)
-	fflush(m_tracefp);
+    fflush(m_tracefp);
 
   return true;
 }
@@ -119,7 +117,7 @@ bool CLogFile::Write(const char *fmt, ...) {
 // Write方法会写入当前的时间，WriteEx方法不写时间。
 bool CLogFile::WriteEx(const char *fmt, ...) {
   if (m_tracefp == 0)
-	return false;
+    return false;
 
   va_list ap;
   va_start(ap, fmt);
@@ -127,7 +125,7 @@ bool CLogFile::WriteEx(const char *fmt, ...) {
   va_end(ap);
 
   if (m_bEnBuffer == false)
-	fflush(m_tracefp);
+    fflush(m_tracefp);
 
   return true;
 }

@@ -11,15 +11,15 @@
 // 返回值：目标字符串dest的地址。
 char *STRCPY(char *dest, const size_t destlen, const char *src) {
   if (dest == 0)
-	return 0;
-  memset(dest, 0, destlen);   // 初始化dest。
+    return 0;
+  memset(dest, 0, destlen); // 初始化dest。
   if (src == 0)
-	return dest;
+    return dest;
 
   if (strlen(src) > destlen - 1)
-	strncpy(dest, src, destlen - 1);
+    strncpy(dest, src, destlen - 1);
   else
-	strcpy(dest, src);
+    strcpy(dest, src);
 
   return dest;
 }
@@ -32,15 +32,15 @@ char *STRCPY(char *dest, const size_t destlen, const char *src) {
 // 返回值：目标字符串dest的地址。
 char *STRNCPY(char *dest, const size_t destlen, const char *src, size_t n) {
   if (dest == 0)
-	return 0;
-  memset(dest, 0, destlen);   // 初始化dest。
+    return 0;
+  memset(dest, 0, destlen); // 初始化dest。
   if (src == 0)
-	return dest;
+    return dest;
 
   if (n > destlen - 1)
-	strncpy(dest, src, destlen - 1);
+    strncpy(dest, src, destlen - 1);
   else
-	strncpy(dest, src, n);
+    strncpy(dest, src, n);
 
   return dest;
 }
@@ -52,17 +52,17 @@ char *STRNCPY(char *dest, const size_t destlen, const char *src, size_t n) {
 // 返回值：目标字符串dest的地址。
 char *STRCAT(char *dest, const size_t destlen, const char *src) {
   if (dest == 0)
-	return 0;
+    return 0;
   if (src == 0)
-	return dest;
+    return dest;
 
   unsigned int left = destlen - 1 - strlen(dest);
 
   if (strlen(src) > left) {
-	strncat(dest, src, left);
-	dest[destlen - 1] = 0;
+    strncat(dest, src, left);
+    dest[destlen - 1] = 0;
   } else
-	strcat(dest, src);
+    strcat(dest, src);
 
   return dest;
 }
@@ -75,17 +75,17 @@ char *STRCAT(char *dest, const size_t destlen, const char *src) {
 // 返回值：目标字符串dest的地址。
 char *STRNCAT(char *dest, const size_t destlen, const char *src, size_t n) {
   if (dest == 0)
-	return 0;
+    return 0;
   if (src == 0)
-	return dest;
+    return dest;
 
   size_t left = destlen - 1 - strlen(dest);
 
   if (n > left) {
-	strncat(dest, src, left);
-	dest[destlen - 1] = 0;
+    strncat(dest, src, left);
+    dest[destlen - 1] = 0;
   } else
-	strncat(dest, src, n);
+    strncat(dest, src, n);
 
   return dest;
 }
@@ -99,7 +99,7 @@ char *STRNCAT(char *dest, const size_t destlen, const char *src, size_t n) {
 // 返回值：格式化后的内容的长度，程序员一般不关心返回值。
 int SPRINTF(char *dest, const size_t destlen, const char *fmt, ...) {
   if (dest == 0)
-	return -1;
+    return -1;
 
   memset(dest, 0, destlen);
 
@@ -121,13 +121,13 @@ int SPRINTF(char *dest, const size_t destlen, const char *fmt, ...) {
 // 返回值：格式化后的内容的长度，程序员一般不关心返回值。
 int SNPRINTF(char *dest, const size_t destlen, size_t n, const char *fmt, ...) {
   if (dest == 0)
-	return -1;
+    return -1;
 
   memset(dest, 0, destlen);
 
   int len = n;
   if (n > destlen)
-	len = destlen;
+    len = destlen;
 
   va_list arg;
   va_start(arg, fmt);
@@ -142,9 +142,9 @@ int SNPRINTF(char *dest, const size_t destlen, size_t n, const char *fmt, ...) {
 // chr：需要删除的字符。
 void DeleteLChar(char *str, const char chr) {
   if (str == 0)
-	return;
+    return;
   if (strlen(str) == 0)
-	return;
+    return;
 
   char strTemp[strlen(str) + 1];
 
@@ -154,7 +154,7 @@ void DeleteLChar(char *str, const char chr) {
   strcpy(strTemp, str);
 
   while (strTemp[iTemp] == chr)
-	iTemp++;
+    iTemp++;
 
   memset(str, 0, strlen(str) + 1);
 
@@ -168,19 +168,19 @@ void DeleteLChar(char *str, const char chr) {
 // chr：需要删除的字符。
 void DeleteRChar(char *str, const char chr) {
   if (str == 0)
-	return;
+    return;
   if (strlen(str) == 0)
-	return;
+    return;
 
   int istrlen = strlen(str);
 
   while (istrlen > 0) {
-	if (str[istrlen - 1] != chr)
-	  break;
+    if (str[istrlen - 1] != chr)
+      break;
 
-	str[istrlen - 1] = 0;
+    str[istrlen - 1] = 0;
 
-	istrlen--;
+    istrlen--;
   }
 }
 
@@ -196,22 +196,22 @@ void DeleteLRChar(char *str, const char chr) {
 // str：待转换的字符串，支持char[]和string两种类型。
 void ToUpper(char *str) {
   if (str == 0)
-	return;
+    return;
 
   if (strlen(str) == 0)
-	return;
+    return;
 
   int istrlen = strlen(str);
 
   for (int ii = 0; ii < istrlen; ii++) {
-	if ((str[ii] >= 'a') && (str[ii] <= 'z'))
-	  str[ii] = str[ii] - 32;
+    if ((str[ii] >= 'a') && (str[ii] <= 'z'))
+      str[ii] = str[ii] - 32;
   }
 }
 
 void ToUpper(string &str) {
   if (str.empty())
-	return;
+    return;
 
   char strtemp[str.size() + 1];
 
@@ -229,22 +229,22 @@ void ToUpper(string &str) {
 // str：待转换的字符串，支持char[]和string两种类型。
 void ToLower(char *str) {
   if (str == 0)
-	return;
+    return;
 
   if (strlen(str) == 0)
-	return;
+    return;
 
   int istrlen = strlen(str);
 
   for (int ii = 0; ii < istrlen; ii++) {
-	if ((str[ii] >= 'A') && (str[ii] <= 'Z'))
-	  str[ii] = str[ii] + 32;
+    if ((str[ii] >= 'A') && (str[ii] <= 'Z'))
+      str[ii] = str[ii] + 32;
   }
 }
 
 void ToLower(string &str) {
   if (str.empty())
-	return;
+    return;
 
   char strtemp[str.size() + 1];
 
@@ -269,20 +269,20 @@ void ToLower(string &str) {
 // 2、如果str2中包函了str1的内容，且bloop为true，存在逻辑错误，将不执行任何替换。
 void UpdateStr(char *str, const char *str1, const char *str2, bool bloop) {
   if (str == 0)
-	return;
+    return;
   if (strlen(str) == 0)
-	return;
+    return;
   if ((str1 == 0) || (str2 == 0))
-	return;
+    return;
 
   // 如果bloop为true并且str2中包函了str1的内容，直接返回，因为会进入死循环，最终导致内存溢出。
   if ((bloop == true) && (strstr(str2, str1) > (void *)0))
-	return;
+    return;
 
   // 尽可能分配更多的空间，但仍有可能出现内存溢出的情况，最好优化成string。
   int ilen = strlen(str) * 10;
   if (ilen < 1000)
-	ilen = 1000;
+    ilen = 1000;
 
   char strTemp[ilen];
 
@@ -291,22 +291,22 @@ void UpdateStr(char *str, const char *str1, const char *str2, bool bloop) {
   char *strPos = 0;
 
   while (true) {
-	if (bloop == true) {
-	  strPos = strstr(str, str1);
-	} else {
-	  strPos = strstr(strStart, str1);
-	}
+    if (bloop == true) {
+      strPos = strstr(str, str1);
+    } else {
+      strPos = strstr(strStart, str1);
+    }
 
-	if (strPos == 0)
-	  break;
+    if (strPos == 0)
+      break;
 
-	memset(strTemp, 0, sizeof(strTemp));
-	strncpy(strTemp, str, strPos - str);
-	strcat(strTemp, str2);
-	strcat(strTemp, strPos + strlen(str1));
-	strcpy(str, strTemp);
+    memset(strTemp, 0, sizeof(strTemp));
+    strncpy(strTemp, str, strPos - str);
+    strcat(strTemp, str2);
+    strcat(strTemp, strPos + strlen(str1));
+    strcpy(str, strTemp);
 
-	strStart = strPos + strlen(str2);
+    strStart = strPos + strlen(str2);
   }
 }
 
@@ -317,10 +317,10 @@ void UpdateStr(char *str, const char *str1, const char *str2, bool bloop) {
 // bdot：是否包括小数点的圆点符号，true-包括；false-不包括。
 void PickNumber(const char *src, char *dest, const bool bsigned, const bool bdot) {
   if (dest == 0)
-	return;
+    return;
   if (src == 0) {
-	strcpy(dest, "");
-	return;
+    strcpy(dest, "");
+    return;
   }
 
   char strtemp[strlen(src) + 1];
@@ -334,23 +334,23 @@ void PickNumber(const char *src, char *dest, const bool bsigned, const bool bdot
   ilen = strlen(strtemp);
 
   for (ipossrc = 0; ipossrc < ilen; ipossrc++) {
-	if ((bsigned == true) && (strtemp[ipossrc] == '+')) {
-	  dest[iposdst++] = strtemp[ipossrc];
-	  continue;
-	}
+    if ((bsigned == true) && (strtemp[ipossrc] == '+')) {
+      dest[iposdst++] = strtemp[ipossrc];
+      continue;
+    }
 
-	if ((bsigned == true) && (strtemp[ipossrc] == '-')) {
-	  dest[iposdst++] = strtemp[ipossrc];
-	  continue;
-	}
+    if ((bsigned == true) && (strtemp[ipossrc] == '-')) {
+      dest[iposdst++] = strtemp[ipossrc];
+      continue;
+    }
 
-	if ((bdot == true) && (strtemp[ipossrc] == '.')) {
-	  dest[iposdst++] = strtemp[ipossrc];
-	  continue;
-	}
+    if ((bdot == true) && (strtemp[ipossrc] == '.')) {
+      dest[iposdst++] = strtemp[ipossrc];
+      continue;
+    }
 
-	if (isdigit(strtemp[ipossrc]))
-	  dest[iposdst++] = strtemp[ipossrc];
+    if (isdigit(strtemp[ipossrc]))
+      dest[iposdst++] = strtemp[ipossrc];
   }
 
   dest[iposdst] = 0;
@@ -363,11 +363,11 @@ void PickNumber(const char *src, char *dest, const bool bsigned, const bool bdot
 bool MatchStr(const string str, const string rules) {
   // 如果用于比较的字符是空的，返回false
   if (rules.size() == 0)
-	return false;
+    return false;
 
   // 如果被比较的字符串是"*"，返回true
   if (rules == "*")
-	return true;
+    return true;
 
   // 处理文件名匹配规则中的时间匹配dd-nn.mm
   char strTemp[2049];
@@ -390,37 +390,37 @@ bool MatchStr(const string str, const string rules) {
   CmdStr.SplitToCmd(strMatchStr, ",");
 
   for (ii = 0; ii < CmdStr.CmdCount(); ii++) {
-	// 如果为空，就一定要跳过，否则就会被配上
-	if (CmdStr.m_vCmdStr[ii].empty() == true)
-	  continue;
+    // 如果为空，就一定要跳过，否则就会被配上
+    if (CmdStr.m_vCmdStr[ii].empty() == true)
+      continue;
 
-	iPOS1 = iPOS2 = 0;
-	CmdSubStr.SplitToCmd(CmdStr.m_vCmdStr[ii], "*");
+    iPOS1 = iPOS2 = 0;
+    CmdSubStr.SplitToCmd(CmdStr.m_vCmdStr[ii], "*");
 
-	for (jj = 0; jj < CmdSubStr.CmdCount(); jj++) {
-	  // 如果是文件名的首部
-	  if (jj == 0) {
-		if (strncmp(strFileName.c_str(), CmdSubStr.m_vCmdStr[jj].c_str(), CmdSubStr.m_vCmdStr[jj].size()) != 0)
-		  break;
-	  }
+    for (jj = 0; jj < CmdSubStr.CmdCount(); jj++) {
+      // 如果是文件名的首部
+      if (jj == 0) {
+        if (strncmp(strFileName.c_str(), CmdSubStr.m_vCmdStr[jj].c_str(), CmdSubStr.m_vCmdStr[jj].size()) != 0)
+          break;
+      }
 
-	  // 如果是文件名的尾部
-	  if (jj == CmdSubStr.CmdCount() - 1) {
-		if (strcmp(strFileName.c_str() + strFileName.size() - CmdSubStr.m_vCmdStr[jj].size(),
-				   CmdSubStr.m_vCmdStr[jj].c_str()) != 0)
-		  break;
-	  }
+      // 如果是文件名的尾部
+      if (jj == CmdSubStr.CmdCount() - 1) {
+        if (strcmp(strFileName.c_str() + strFileName.size() - CmdSubStr.m_vCmdStr[jj].size(),
+                   CmdSubStr.m_vCmdStr[jj].c_str()) != 0)
+          break;
+      }
 
-	  iPOS2 = strFileName.find(CmdSubStr.m_vCmdStr[jj], iPOS1);
+      iPOS2 = strFileName.find(CmdSubStr.m_vCmdStr[jj], iPOS1);
 
-	  if (iPOS2 < 0)
-		break;
+      if (iPOS2 < 0)
+        break;
 
-	  iPOS1 = iPOS2 + CmdSubStr.m_vCmdStr[jj].size();
-	}
+      iPOS1 = iPOS2 + CmdSubStr.m_vCmdStr[jj].size();
+    }
 
-	if (jj == CmdSubStr.CmdCount())
-	  return true;
+    if (jj == CmdSubStr.CmdCount())
+      return true;
   }
 
   return false;
@@ -428,9 +428,7 @@ bool MatchStr(const string str, const string rules) {
 
 // 正则表达式，判断一个字符串是否匹配另一个字符串。
 // 保留MatchFileName函数是为了兼容之前的版本。
-bool MatchFileName(const string in_FileName, const string in_MatchStr) {
-  return MatchStr(in_FileName, in_MatchStr);
-}
+bool MatchFileName(const string in_FileName, const string in_MatchStr) { return MatchStr(in_FileName, in_MatchStr); }
 
 // 统计字符串的字数，全角的汉字和全角的标点符号算一个字，半角的汉字和半角的标点符号也算一个字。
 // str：待统计的字符串。
@@ -441,16 +439,16 @@ int Words(const char *str) {
   int ilen = strlen(str);
 
   for (int ii = 0; ii < ilen; ii++) {
-	if ((unsigned int)str[ii] < 128) {
-	  wlen = wlen + 1;
-	} else {
-	  if (biswide == true) {
-		wlen = wlen + 1;
-		biswide = false;
-	  } else {
-		biswide = true;
-	  }
-	}
+    if ((unsigned int)str[ii] < 128) {
+      wlen = wlen + 1;
+    } else {
+      if (biswide == true) {
+        wlen = wlen + 1;
+        biswide = false;
+      } else {
+        biswide = true;
+      }
+    }
   }
 
   return wlen;

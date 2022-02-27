@@ -10,7 +10,6 @@ struct st_fileinfo {
   char mtime[21];
 };
 
-
 ///////////////////////////////////// /////////////////////////////////////
 
 // 接收socket的对端发送过来的数据。
@@ -44,7 +43,6 @@ bool Writen(const int sockfd, const char *buffer, const size_t n);
 
 // 以上是socket通信的函数和类
 ///////////////////////////////////// /////////////////////////////////////
-
 
 // 向socket的对端发送文件。
 // sockfd：可用的socket连接。

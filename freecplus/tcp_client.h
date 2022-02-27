@@ -7,12 +7,12 @@
 class CTcpClient {
 public:
   int m_sockfd;    // 客户端的socket.
-  char m_ip[21];    // 服务端的ip地址。
+  char m_ip[21];   // 服务端的ip地址。
   int m_port;      // 与服务端通信的端口。
-  bool m_btimeout;  // 调用Read和Write方法时，失败的原因是否是超时：true-未超时，false-已超时。
+  bool m_btimeout; // 调用Read和Write方法时，失败的原因是否是超时：true-未超时，false-已超时。
   int m_buflen;    // 调用Read方法后，接收到的报文的大小，单位：字节。
 
-  CTcpClient();  // 构造函数。
+  CTcpClient(); // 构造函数。
 
   // 向服务端发起连接请求。
   // ip：服务端的ip地址。
@@ -35,5 +35,5 @@ public:
   // 断开与服务端的连接
   void Close();
 
-  ~CTcpClient();  // 析构函数自动关闭socket，释放资源。
+  ~CTcpClient(); // 析构函数自动关闭socket，释放资源。
 };

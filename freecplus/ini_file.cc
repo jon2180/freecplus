@@ -5,9 +5,7 @@
 #include "file.h"
 #include "util/xml_buffer.h"
 
-CIniFile::CIniFile() {
-
-}
+CIniFile::CIniFile() {}
 
 bool CIniFile::LoadFile(const char *filename) {
   m_xmlbuffer.clear();
@@ -15,21 +13,21 @@ bool CIniFile::LoadFile(const char *filename) {
   CFile File;
 
   if (File.Open(filename, "r") == false)
-	return false;
+    return false;
 
   char strLine[501];
 
   while (true) {
-	memset(strLine, 0, sizeof(strLine));
+    memset(strLine, 0, sizeof(strLine));
 
-	if (File.FFGETS(strLine, 500) == false)
-	  break;
+    if (File.FFGETS(strLine, 500) == false)
+      break;
 
-	m_xmlbuffer = m_xmlbuffer + strLine;
+    m_xmlbuffer = m_xmlbuffer + strLine;
   }
 
   if (m_xmlbuffer.length() < 10)
-	return false;
+    return false;
 
   return true;
 }

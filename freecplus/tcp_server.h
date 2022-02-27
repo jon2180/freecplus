@@ -5,16 +5,16 @@
 // socket通信的服务端类
 class CTcpServer {
 private:
-  int m_socklen;                    // 结构体struct sockaddr_in的大小。
-  struct sockaddr_in m_clientaddr;  // 客户端的地址信息。
-  struct sockaddr_in m_servaddr;    // 服务端的地址信息。
+  int m_socklen;                   // 结构体struct sockaddr_in的大小。
+  struct sockaddr_in m_clientaddr; // 客户端的地址信息。
+  struct sockaddr_in m_servaddr;   // 服务端的地址信息。
 public:
-  int m_listenfd;   // 服务端用于监听的socket。
-  int m_connfd;     // 客户端连接上来的socket。
-  bool m_btimeout;   // 调用Read和Write方法时，失败的原因是否是超时：true-未超时，false-已超时。
-  int m_buflen;     // 调用Read方法后，接收到的报文的大小，单位：字节。
+  int m_listenfd;  // 服务端用于监听的socket。
+  int m_connfd;    // 客户端连接上来的socket。
+  bool m_btimeout; // 调用Read和Write方法时，失败的原因是否是超时：true-未超时，false-已超时。
+  int m_buflen;    // 调用Read方法后，接收到的报文的大小，单位：字节。
 
-  CTcpServer();  // 构造函数。
+  CTcpServer(); // 构造函数。
 
   // 服务端初始化。
   // port：指定服务端用于监听的端口。
@@ -47,6 +47,5 @@ public:
   // 关闭客户端的socket，即m_connfd，常用于多进程服务程序的父进程代码中。
   void CloseClient();
 
-  ~CTcpServer();  // 析构函数自动关闭socket，释放资源。
+  ~CTcpServer(); // 析构函数自动关闭socket，释放资源。
 };
-

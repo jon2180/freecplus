@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 
-using std::vector;
 using std::string;
+using std::vector;
 
 // CCmdStr类用于拆分有分隔符的字符串。
 // 字符串的格式为：字段内容1+分隔符+字段内容2+分隔符+字段内容3+分隔符+...+字段内容n。
@@ -12,9 +12,9 @@ using std::string;
 // 球衣号码、场上位置、年龄、身高、体重和效力的俱乐部，字段之间用半角的逗号分隔。
 class CCmdStr {
 public:
-  vector<string> m_vCmdStr;  // 存放拆分后的字段内容。
+  vector<string> m_vCmdStr; // 存放拆分后的字段内容。
 
-  CCmdStr();  // 构造函数。
+  CCmdStr(); // 构造函数。
 
   // 把字符串拆分到m_vCmdStr容器中。
   // buffer：待拆分的字符串。
@@ -30,12 +30,12 @@ public:
   // value：传入变量的地址，用于存放字段内容。
   // 返回值：true-成功；如果inum的取值超出了m_vCmdStr容器的大小，返回失败。
   bool GetValue(const int inum, char *value, const int ilen = 0); // 字符串，ilen缺省值为0。
-  bool GetValue(const int inum, int *value); // int整数。
-  bool GetValue(const int inum, unsigned int *value); // unsigned int整数。
-  bool GetValue(const int inum, long *value); // long整数。
-  bool GetValue(const int inum, unsigned long *value); // unsigned long整数。
-  bool GetValue(const int inum, double *value); // 双精度double。
-  bool GetValue(const int inum, bool *value); // bool型。
+  bool GetValue(const int inum, int *value);                      // int整数。
+  bool GetValue(const int inum, unsigned int *value);             // unsigned int整数。
+  bool GetValue(const int inum, long *value);                     // long整数。
+  bool GetValue(const int inum, unsigned long *value);            // unsigned long整数。
+  bool GetValue(const int inum, double *value);                   // 双精度double。
+  bool GetValue(const int inum, bool *value);                     // bool型。
 
   ~CCmdStr(); // 析构函数。
 };
