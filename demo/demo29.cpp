@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 int main() {
-  freecplus::CTimer Timer;
+  freecplus::Timer Timer;
 
   printf("elapsed=%lf\n", Timer.Elapsed());
   sleep(1);

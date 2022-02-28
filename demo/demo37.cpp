@@ -9,8 +9,8 @@
 int main() {
   FILE *fp = 0;
 
-  if ((fp = freecplus::FOPEN("/tmp/aaa/bbb/ccc/tmp.xml", "r")) == 0) {
-    printf("FOPEN(/tmp/aaa/bbb/ccc/tmp.xml) %d:%s\n", errno, strerror(errno));
+  if ((fp = freecplus::OpenFile("/tmp/aaa/bbb/ccc/tmp.xml", "r")) == 0) {
+    printf("OpenFile(/tmp/aaa/bbb/ccc/tmp.xml) %d:%s\n", errno, strerror(errno));
     return -1;
   }
 
@@ -18,9 +18,9 @@ int main() {
 
   while (true) {
     memset(strBuffer, 0, sizeof(strBuffer));
-    if (freecplus::FGETS(fp, strBuffer, 300) == false)
+    if (freecplus::GetLineFromFile(fp, strBuffer, 300) == false)
       break; // 行内容以"\n"结束。
-    // if (FGETS(fp,strBuffer,300,"<endl/>")==false) break; // 行内容以"<endl/>"结束。
+    // if (GetLineFromFile(fp,strBuffer,300,"<endl/>")==false) break; // 行内容以"<endl/>"结束。
 
     printf("strBuffer=%s", strBuffer);
   }

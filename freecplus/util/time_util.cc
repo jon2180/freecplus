@@ -13,7 +13,7 @@ namespace freecplus {
 // stime：字符串表示的时间。
 // fmt：输出字符串时间stime的格式，与LocalTime函数的fmt参数相同，如果fmt的格式不正确，stime将为空。
 void timetostr(const time_t ltime, char *stime, const char *fmt) {
-  if (stime == 0)
+  if (stime == nullptr)
     return;
 
   strcpy(stime, "");
@@ -23,7 +23,7 @@ void timetostr(const time_t ltime, char *stime, const char *fmt) {
   sttm.tm_year = sttm.tm_year + 1900;
   sttm.tm_mon++;
 
-  if (fmt == 0) {
+  if (fmt == nullptr) {
     snprintf(stime, 20, "%04u-%02u-%02u %02u:%02u:%02u", sttm.tm_year, sttm.tm_mon, sttm.tm_mday, sttm.tm_hour,
              sttm.tm_min, sttm.tm_sec);
     return;
@@ -118,7 +118,7 @@ void timetostr(const time_t ltime, char *stime, const char *fmt) {
     3）调用函数的时候，如果fmt与上述格式都匹配，stime的内容将为空。
 */
 void LocalTime(char *stime, const char *fmt, const int timetvl) {
-  if (stime == 0)
+  if (stime == nullptr)
     return;
 
   time_t timer;
@@ -175,7 +175,7 @@ time_t strtotime(const char *stime) {
 // 注意：in_stime和out_stime参数可以是同一个变量的地址，如果调用失败，out_stime的内容会清空。
 // 返回值：true-成功，false-失败，如果返回失败，可以认为是in_stime的格式不正确。
 bool AddTime(const char *in_stime, char *out_stime, const int timetvl, const char *fmt) {
-  if ((in_stime == 0) || (out_stime == 0))
+  if ((in_stime == nullptr) || (out_stime == nullptr))
     return false;
 
   time_t timer;

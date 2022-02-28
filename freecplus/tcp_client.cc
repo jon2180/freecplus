@@ -10,14 +10,14 @@
 
 namespace freecplus {
 
-CTcpClient::CTcpClient() {
+TcpClient::TcpClient() {
   m_sockfd = -1;
   memset(m_ip, 0, sizeof(m_ip));
   m_port = 0;
   m_btimeout = false;
 }
 
-bool CTcpClient::ConnectToServer(const char *ip, const int port) {
+bool TcpClient::ConnectToServer(const char *ip, const int port) {
   if (m_sockfd != -1) {
     close(m_sockfd);
     m_sockfd = -1;
@@ -52,7 +52,7 @@ bool CTcpClient::ConnectToServer(const char *ip, const int port) {
   return true;
 }
 
-bool CTcpClient::Read(char *buffer, const int itimeout) {
+bool TcpClient::Read(char *buffer, const int itimeout) {
   if (m_sockfd == -1)
     return false;
 
@@ -69,7 +69,7 @@ bool CTcpClient::Read(char *buffer, const int itimeout) {
     m_btimeout = false;
 
     int i;
-    if ((i = select(m_sockfd + 1, &tmpfd, 0, 0, &timeout)) <= 0) {
+    if ((i = select(m_sockfd + 1, &tmpfd, nullptr, nullptr, &timeout)) <= 0) {
       if (i == 0)
         m_btimeout = true;
       return false;
@@ -80,7 +80,7 @@ bool CTcpClient::Read(char *buffer, const int itimeout) {
   return (TcpRead(m_sockfd, buffer, &m_buflen));
 }
 
-bool CTcpClient::Write(const char *buffer, const int ibuflen) {
+bool TcpClient::Write(const char *buffer, const int ibuflen) {
   if (m_sockfd == -1)
     return false;
 
@@ -96,13 +96,13 @@ bool CTcpClient::Write(const char *buffer, const int ibuflen) {
   m_btimeout = false;
 
   int i;
-  if ((i = select(m_sockfd + 1, 0, &tmpfd, 0, &timeout)) <= 0) {
+  if ((i = select(m_sockfd + 1, nullptr, &tmpfd, nullptr, &timeout)) <= 0) {
     if (i == 0)
       m_btimeout = true;
     return false;
   }
 
-  int ilen = ibuflen;
+  size_t ilen = ibuflen;
 
   if (ibuflen == 0)
     ilen = strlen(buffer);
@@ -110,7 +110,7 @@ bool CTcpClient::Write(const char *buffer, const int ibuflen) {
   return (TcpWrite(m_sockfd, buffer, ilen));
 }
 
-void CTcpClient::Close() {
+void TcpClient::Close() {
   if (m_sockfd > 0)
     close(m_sockfd);
 
@@ -120,6 +120,6 @@ void CTcpClient::Close() {
   m_btimeout = false;
 }
 
-CTcpClient::~CTcpClient() { Close(); }
+TcpClient::~TcpClient() { Close(); }
 
 } // namespace freecplus

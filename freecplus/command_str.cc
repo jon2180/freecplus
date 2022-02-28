@@ -6,13 +6,13 @@
 
 namespace freecplus {
 
-CCmdStr::CCmdStr() { m_vCmdStr.clear(); }
+CommandStr::CommandStr() { m_vCmdStr.clear(); }
 
 // 把字符串拆分到m_vCmdStr容器中。
 // buffer：待拆分的字符串。
 // sepstr：buffer字符串中字段内容的分隔符，注意，分隔符是字符串，如","、" "、"|"、"~!~"。
 // bdelspace：是否删除拆分后的字段内容前后的空格，true-删除；false-不删除，缺省删除。
-void CCmdStr::SplitToCmd(const string buffer, const char *sepstr, const bool bdelspace) {
+void CommandStr::SplitToCmd(const string buffer, const char *sepstr, const bool bdelspace) {
   // 清除所有的旧数据
   m_vCmdStr.clear();
 
@@ -26,7 +26,7 @@ void CCmdStr::SplitToCmd(const string buffer, const char *sepstr, const bool bde
   while ((iPOS = srcstr.find(sepstr)) >= 0) {
     substr = srcstr.substr(0, iPOS);
 
-    if (bdelspace == true) {
+    if (bdelspace) {
       memset(str, 0, sizeof(str));
 
       strncpy(str, substr.c_str(), 2000);
@@ -45,7 +45,7 @@ void CCmdStr::SplitToCmd(const string buffer, const char *sepstr, const bool bde
 
   substr = srcstr;
 
-  if (bdelspace == true) {
+  if (bdelspace) {
     memset(str, 0, sizeof(str));
 
     strncpy(str, substr.c_str(), 2000);
@@ -56,14 +56,12 @@ void CCmdStr::SplitToCmd(const string buffer, const char *sepstr, const bool bde
   }
 
   m_vCmdStr.push_back(substr);
-
-  return;
 }
 
-int CCmdStr::CmdCount() { return m_vCmdStr.size(); }
+int CommandStr::CmdCount() const { return m_vCmdStr.size(); }
 
-bool CCmdStr::GetValue(const int inum, char *value, const int ilen) {
-  if ((inum >= (int)m_vCmdStr.size()) || (value == 0))
+bool CommandStr::GetValue(const int inum, char *value, const int ilen) {
+  if ((inum >= (int)m_vCmdStr.size()) || (value == nullptr))
     return false;
 
   if (ilen > 0)
@@ -79,7 +77,21 @@ bool CCmdStr::GetValue(const int inum, char *value, const int ilen) {
   return true;
 }
 
-bool CCmdStr::GetValue(const int inum, int *value) {
+bool CommandStr::GetValue(const int inum, int *value) {
+  if ((inum >= (int)m_vCmdStr.size()) || (value == nullptr))
+    return false;
+
+  (*value) = 0;
+
+  if (inum >= (int)m_vCmdStr.size())
+    return false;
+
+  (*value) = atoi(m_vCmdStr[inum].c_str());
+
+  return true;
+}
+
+bool CommandStr::GetValue(const int inum, unsigned int *value) {
   if ((inum >= (int)m_vCmdStr.size()) || (value == 0))
     return false;
 
@@ -93,22 +105,8 @@ bool CCmdStr::GetValue(const int inum, int *value) {
   return true;
 }
 
-bool CCmdStr::GetValue(const int inum, unsigned int *value) {
-  if ((inum >= (int)m_vCmdStr.size()) || (value == 0))
-    return false;
-
-  (*value) = 0;
-
-  if (inum >= (int)m_vCmdStr.size())
-    return false;
-
-  (*value) = atoi(m_vCmdStr[inum].c_str());
-
-  return true;
-}
-
-bool CCmdStr::GetValue(const int inum, long *value) {
-  if ((inum >= (int)m_vCmdStr.size()) || (value == 0))
+bool CommandStr::GetValue(const int inum, long *value) {
+  if ((inum >= (int)m_vCmdStr.size()) || (value == nullptr))
     return false;
 
   (*value) = 0;
@@ -121,8 +119,8 @@ bool CCmdStr::GetValue(const int inum, long *value) {
   return true;
 }
 
-bool CCmdStr::GetValue(const int inum, unsigned long *value) {
-  if ((inum >= (int)m_vCmdStr.size()) || (value == 0))
+bool CommandStr::GetValue(const int inum, unsigned long *value) {
+  if ((inum >= (int)m_vCmdStr.size()) || (value == nullptr))
     return false;
 
   (*value) = 0;
@@ -135,8 +133,8 @@ bool CCmdStr::GetValue(const int inum, unsigned long *value) {
   return true;
 }
 
-bool CCmdStr::GetValue(const int inum, double *value) {
-  if ((inum >= (int)m_vCmdStr.size()) || (value == 0))
+bool CommandStr::GetValue(const int inum, double *value) {
+  if ((inum >= (int)m_vCmdStr.size()) || (value == nullptr))
     return false;
 
   (*value) = 0;
@@ -149,11 +147,11 @@ bool CCmdStr::GetValue(const int inum, double *value) {
   return true;
 }
 
-bool CCmdStr::GetValue(const int inum, bool *value) {
-  if ((inum >= (int)m_vCmdStr.size()) || (value == 0))
+bool CommandStr::GetValue(const int inum, bool *value) {
+  if ((inum >= (int)m_vCmdStr.size()) || (value == nullptr))
     return false;
 
-  (*value) = 0;
+  (*value) = false;
 
   if (inum >= (int)m_vCmdStr.size())
     return false;
@@ -169,6 +167,6 @@ bool CCmdStr::GetValue(const int inum, bool *value) {
   return true;
 }
 
-CCmdStr::~CCmdStr() { m_vCmdStr.clear(); }
+CommandStr::~CommandStr() { m_vCmdStr.clear(); }
 
 } // namespace freecplus

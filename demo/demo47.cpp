@@ -10,7 +10,7 @@
 #include "freecplus.h"
 
 int main(int argc, char *argv[]) {
-  freecplus::CTcpClient TcpClient;  // 创建客户端的对象。
+  freecplus::TcpClient TcpClient;  // 创建客户端的对象。
 
   if (TcpClient.ConnectToServer("172.21.0.3", 5858) ==
       false)  // 向服务端发起连接请求。

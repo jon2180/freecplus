@@ -9,7 +9,7 @@ using std::string;
 using std::vector;
 
 // 获取某目录及其子目录中的文件列表信息。
-class CDir {
+class Dir {
 public:
   char m_DirName[301];      // 目录名，例如：/tmp/root。
   char m_FileName[301];     // 文件名，不包括目录名，例如：data.xml。
@@ -23,9 +23,9 @@ public:
   vector<string> m_vFileName; // 存放OpenDir方法获取到的绝对路径文件名清单。
   int m_pos;                  // 已读取m_vFileName容器的位置，每调用一次ReadDir方法m_pos加1。
 
-  CDir(); // 构造函数。
+  Dir(); // 构造函数。
 
-  void initdata(); // 初始化成员变量。
+  void InitData(); // 初始化成员变量。
 
   // 设置文件时间的格式，支持"yyyy-mm-dd hh24:mi:ss"和"yyyymmddhh24miss"两种，缺省是前者。
   void SetDateFMT(const char *in_DateFMT);
@@ -37,18 +37,21 @@ public:
   // bAndChild，是否打开各级子目录，缺省值为false-不打开子目录。
   // bSort，是否对获取到的文件列表（即m_vFileName容器中的内容）进行排序，缺省值为false-不排序。
   // 返回值：true-成功，false-失败，如果in_DirName参数指定的目录不存在，OpenDir方法会创建该目录，如果创建失败，返回false，如果当前用户对in_DirName目录下的子目录没有读取权限也会返回false。
-  bool OpenDir(const char *in_DirName, const char *in_MatchStr, const unsigned int in_MaxCount = 10000,
-               const bool bAndChild = false, bool bSort = false);
-
-  // 这是一个递归函数，被OpenDir()的调用，在CDir类的外部不需要调用它。
-  bool _OpenDir(const char *in_DirName, const char *in_MatchStr, const unsigned int in_MaxCount, const bool bAndChild);
+  bool OpenDir(const char *in_DirName, const char *in_MatchStr, unsigned int in_MaxCount = 10000,
+               bool bAndChild = false, bool bSort = false);
 
   // 从m_vFileName容器中获取一条记录（文件名），同时获取该文件的大小、修改时间等信息。
   // 调用OpenDir方法时，m_vFileName容器被清空，m_pos归零，每调用一次ReadDir方法m_pos加1。
   // 当m_pos小于m_vFileName.size()，返回true，否则返回false。
   bool ReadDir();
 
-  ~CDir(); // 析构函数。
+  ~Dir(); // 析构函数。
+
+ private:
+
+  // 这是一个递归函数，被OpenDir()的调用，在CDir类的外部不需要调用它。
+  bool _OpenDir(const char *in_DirName, const char *in_MatchStr, unsigned int in_MaxCount, bool bAndChild);
+
 };
 
 } // namespace freecplus

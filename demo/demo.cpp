@@ -3,7 +3,7 @@
 #include "freecplus.h"
 
 int main() {
-  freecplus::CFile File;
+  freecplus::File File;
 
   if (File.Open("girl.xml", "r") == false) {
     printf("File.Open(%s) failed.\n", "girl.xml");

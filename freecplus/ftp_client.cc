@@ -10,8 +10,8 @@
 
 namespace freecplus {
 
-Cftp::Cftp() {
-  m_ftpconn = 0;
+FtpClient::FtpClient() {
+  m_ftpconn = nullptr;
 
   initdata();
 
@@ -22,18 +22,18 @@ Cftp::Cftp() {
   m_optionfailed = false;
 }
 
-Cftp::~Cftp() { logout(); }
+FtpClient::~FtpClient() { logout(); }
 
-void Cftp::initdata() {
+void FtpClient::initdata() {
   m_size = 0;
 
   memset(m_mtime, 0, sizeof(m_mtime));
 }
 
-bool Cftp::login(const char *host, const char *username, const char *password, const int imode) {
-  if (m_ftpconn != 0) {
+bool FtpClient::login(const char *host, const char *username, const char *password, const int imode) {
+  if (m_ftpconn != nullptr) {
     FtpQuit(m_ftpconn);
-    m_ftpconn = 0;
+    m_ftpconn = nullptr;
   }
 
   m_connectfailed = m_loginfailed = m_optionfailed = false;
@@ -56,30 +56,30 @@ bool Cftp::login(const char *host, const char *username, const char *password, c
   return true;
 }
 
-bool Cftp::logout() {
-  if (m_ftpconn == 0)
+bool FtpClient::logout() {
+  if (m_ftpconn == nullptr)
     return false;
 
   FtpQuit(m_ftpconn);
 
-  m_ftpconn = 0;
+  m_ftpconn = nullptr;
 
   return true;
 }
 
-bool Cftp::get(const char *remotefilename, const char *localfilename, const bool bCheckMTime) {
-  if (m_ftpconn == 0)
+bool FtpClient::get(const char *remotefilename, const char *localfilename, const bool bCheckMTime) {
+  if (m_ftpconn == nullptr)
     return false;
 
   // 创建本地文件目录
-  MKDIR(localfilename);
+  MakeDir(localfilename);
 
   char strlocalfilenametmp[301];
   memset(strlocalfilenametmp, 0, sizeof(strlocalfilenametmp));
   snprintf(strlocalfilenametmp, 300, "%s.tmp", localfilename);
 
   // 获取远程服务器的文件的时间
-  if (mtime(remotefilename) == false)
+  if (!mtime(remotefilename))
     return false;
 
   // 取文件
@@ -87,11 +87,11 @@ bool Cftp::get(const char *remotefilename, const char *localfilename, const bool
     return false;
 
   // 判断文件获取前和获取后的时间，如果时间不同，表示文件已改变，返回失败
-  if (bCheckMTime == true) {
+  if (bCheckMTime) {
     char strmtime[21];
     strcpy(strmtime, m_mtime);
 
-    if (mtime(remotefilename) == false)
+    if (!mtime(remotefilename))
       return false;
 
     if (strcmp(m_mtime, strmtime) != 0)
@@ -99,20 +99,20 @@ bool Cftp::get(const char *remotefilename, const char *localfilename, const bool
   }
 
   // 重置文件时间
-  UTime(strlocalfilenametmp, m_mtime);
+  SetFileModifyTime(strlocalfilenametmp, m_mtime);
 
   // 改为正式的文件
   if (rename(strlocalfilenametmp, localfilename) != 0)
     return false;
 
   // 获取文件的大小
-  m_size = FileSize(localfilename);
+  m_size = GetFileSize(localfilename);
 
   return true;
 }
 
-bool Cftp::mtime(const char *remotefilename) {
-  if (m_ftpconn == 0)
+bool FtpClient::mtime(const char *remotefilename) {
+  if (m_ftpconn == nullptr)
     return false;
 
   memset(m_mtime, 0, sizeof(m_mtime));
@@ -128,8 +128,8 @@ bool Cftp::mtime(const char *remotefilename) {
   return true;
 }
 
-bool Cftp::size(const char *remotefilename) {
-  if (m_ftpconn == 0)
+bool FtpClient::size(const char *remotefilename) {
+  if (m_ftpconn == nullptr)
     return false;
 
   m_size = 0;
@@ -140,8 +140,8 @@ bool Cftp::size(const char *remotefilename) {
   return true;
 }
 
-bool Cftp::site(const char *command) {
-  if (m_ftpconn == 0)
+bool FtpClient::site(const char *command) const {
+  if (m_ftpconn == nullptr)
     return false;
 
   if (FtpSite(command, m_ftpconn) == false)
@@ -150,8 +150,8 @@ bool Cftp::site(const char *command) {
   return true;
 }
 
-bool Cftp::chdir(const char *remotedir) {
-  if (m_ftpconn == 0)
+bool FtpClient::chdir(const char *remotedir) const {
+  if (m_ftpconn == nullptr)
     return false;
 
   if (FtpChdir(remotedir, m_ftpconn) == false)
@@ -160,8 +160,8 @@ bool Cftp::chdir(const char *remotedir) {
   return true;
 }
 
-bool Cftp::mkdir(const char *remotedir) {
-  if (m_ftpconn == 0)
+bool FtpClient::mkdir(const char *remotedir) const {
+  if (m_ftpconn == nullptr)
     return false;
 
   if (FtpMkdir(remotedir, m_ftpconn) == false)
@@ -170,8 +170,8 @@ bool Cftp::mkdir(const char *remotedir) {
   return true;
 }
 
-bool Cftp::rmdir(const char *remotedir) {
-  if (m_ftpconn == 0)
+bool FtpClient::rmdir(const char *remotedir) const {
+  if (m_ftpconn == nullptr)
     return false;
 
   if (FtpRmdir(remotedir, m_ftpconn) == false)
@@ -180,8 +180,8 @@ bool Cftp::rmdir(const char *remotedir) {
   return true;
 }
 
-bool Cftp::dir(const char *remotedir, const char *listfilename) {
-  if (m_ftpconn == 0)
+bool FtpClient::dir(const char *remotedir, const char *listfilename) const {
+  if (m_ftpconn == nullptr)
     return false;
 
   if (FtpDir(listfilename, remotedir, m_ftpconn) == false)
@@ -190,12 +190,12 @@ bool Cftp::dir(const char *remotedir, const char *listfilename) {
   return true;
 }
 
-bool Cftp::nlist(const char *remotedir, const char *listfilename) {
-  if (m_ftpconn == 0)
+bool FtpClient::nlist(const char *remotedir, const char *listfilename) const {
+  if (m_ftpconn == nullptr)
     return false;
 
   // 创建本地文件目录
-  MKDIR(listfilename);
+  MakeDir(listfilename);
 
   if (FtpNlst(listfilename, remotedir, m_ftpconn) == false)
     return false;
@@ -203,7 +203,7 @@ bool Cftp::nlist(const char *remotedir, const char *listfilename) {
   return true;
 }
 
-bool Cftp::put(const char *localfilename, const char *remotefilename, const bool bCheckSize) {
+bool FtpClient::put(const char *localfilename, const char *remotefilename, const bool bCheckSize) {
   if (m_ftpconn == 0)
     return false;
 
@@ -218,19 +218,19 @@ bool Cftp::put(const char *localfilename, const char *remotefilename, const bool
     return false;
 
   // 判断已上传的文件的大小与本地文件是否相同，确保上传成功。
-  if (bCheckSize == true) {
-    if (size(remotefilename) == false)
+  if (bCheckSize) {
+    if (!size(remotefilename))
       return false;
 
-    if (m_size != FileSize(localfilename))
+    if (m_size != GetFileSize(localfilename))
       return false;
   }
 
   return true;
 }
 
-bool Cftp::ftpdelete(const char *remotefilename) {
-  if (m_ftpconn == 0)
+bool FtpClient::ftpdelete(const char *remotefilename) const {
+  if (m_ftpconn == nullptr)
     return false;
 
   if (FtpDelete(remotefilename, m_ftpconn) == false)
@@ -239,8 +239,8 @@ bool Cftp::ftpdelete(const char *remotefilename) {
   return true;
 }
 
-bool Cftp::ftprename(const char *srcremotefilename, const char *dstremotefilename) {
-  if (m_ftpconn == 0)
+bool FtpClient::ftprename(const char *srcremotefilename, const char *dstremotefilename) const {
+  if (m_ftpconn == nullptr)
     return false;
 
   if (FtpRename(srcremotefilename, dstremotefilename, m_ftpconn) == false)
@@ -249,9 +249,9 @@ bool Cftp::ftprename(const char *srcremotefilename, const char *dstremotefilenam
   return true;
 }
 
-char *Cftp::response() {
-  if (m_ftpconn == 0)
-    return 0;
+char *FtpClient::response() const {
+  if (m_ftpconn == nullptr)
+    return nullptr;
 
   return FtpLastResponse(m_ftpconn);
 }

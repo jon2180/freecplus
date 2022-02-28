@@ -10,7 +10,7 @@
 
 namespace freecplus {
 
-CDir::CDir() {
+Dir::Dir() {
   m_pos = 0;
 
   memset(m_DateFMT, 0, sizeof(m_DateFMT));
@@ -18,10 +18,10 @@ CDir::CDir() {
 
   m_vFileName.clear();
 
-  initdata();
+  InitData();
 }
 
-void CDir::initdata() {
+void Dir::InitData() {
   memset(m_DirName, 0, sizeof(m_DirName));
   memset(m_FileName, 0, sizeof(m_FileName));
   memset(m_FullFileName, 0, sizeof(m_FullFileName));
@@ -32,7 +32,7 @@ void CDir::initdata() {
 }
 
 // 设置文件时间的格式，支持"yyyy-mm-dd hh24:mi:ss"和"yyyymmddhh24miss"两种，缺省是前者。
-void CDir::SetDateFMT(const char *in_DateFMT) {
+void Dir::SetDateFMT(const char *in_DateFMT) {
   memset(m_DateFMT, 0, sizeof(m_DateFMT));
   strcpy(m_DateFMT, in_DateFMT);
 }
@@ -44,13 +44,13 @@ void CDir::SetDateFMT(const char *in_DateFMT) {
 // bAndChild，是否打开各级子目录，缺省值为false-不打开子目录。
 // bSort，是否对获取到的文件列表（即m_vFileName容器中的内容）进行排序，缺省值为false-不排序。
 // 返回值：如果in_DirName参数指定的目录不存在，OpenDir方法会创建该目录，如果创建失败，返回false，还有，如果当前用户对in_DirName目录下的子目录没有读取权限也会返回false，其它正常情况下都会返回true。
-bool CDir::OpenDir(const char *in_DirName, const char *in_MatchStr, const unsigned int in_MaxCount,
-                   const bool bAndChild, bool bSort) {
+bool Dir::OpenDir(const char *in_DirName, const char *in_MatchStr, const unsigned int in_MaxCount,
+				  const bool bAndChild, bool bSort) {
   m_pos = 0;
   m_vFileName.clear();
 
   // 如果目录不存在，就创建该目录
-  if (MKDIR(in_DirName, false) == false)
+  if (MakeDir(in_DirName, false) == false)
     return false;
 
   bool bRet = _OpenDir(in_DirName, in_MatchStr, in_MaxCount, bAndChild);
@@ -63,8 +63,8 @@ bool CDir::OpenDir(const char *in_DirName, const char *in_MatchStr, const unsign
 }
 
 // 这是一个递归函数，用于OpenDir()的调用，在CDir类的外部不需要调用它。
-bool CDir::_OpenDir(const char *in_DirName, const char *in_MatchStr, const unsigned int in_MaxCount,
-                    const bool bAndChild) {
+bool Dir::_OpenDir(const char *in_DirName, const char *in_MatchStr, const unsigned int in_MaxCount,
+				   const bool bAndChild) {
   DIR *dir;
 
   if ((dir = opendir(in_DirName)) == 0)
@@ -131,8 +131,8 @@ classified as an NT file.
 // 从m_vFileName容器中获取一条记录（文件名），同时得到该文件的大小、修改时间等信息。
 // 调用OpenDir方法时，m_vFileName容器被清空，m_pos归零，每调用一次ReadDir方法m_pos加1。
 // 当m_pos小于m_vFileName.size()，返回true，否则返回false。
-bool CDir::ReadDir() {
-  initdata();
+bool Dir::ReadDir() {
+  InitData();
 
   int ivsize = m_vFileName.size();
 
@@ -205,7 +205,7 @@ bool CDir::ReadDir() {
   return true;
 }
 
-CDir::~CDir() {
+Dir::~Dir() {
   m_vFileName.clear();
 
   // m_vDirName.clear();

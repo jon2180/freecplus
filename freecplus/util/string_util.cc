@@ -7,16 +7,18 @@
 
 namespace freecplus {
 
-// 安全的strcpy函数。
-// dest：目标字符串，不需要初始化，在STRCPY函数中有初始化代码。
-// destlen：目标字符串dest占用内存的大小。
-// src：原字符串。
-// 返回值：目标字符串dest的地址。
+/**
+ * 安全的strcpy函数
+ * @param dest 目标字符串，不需要初始化，在STRCPY函数中有初始化代码。
+ * @param destlen 目标字符串dest占用内存的大小。
+ * @param src 原字符串。
+ * @return 目标字符串dest的地址。
+ */
 char *STRCPY(char *dest, const size_t destlen, const char *src) {
-  if (dest == 0)
-    return 0;
+  if (dest == nullptr)
+    return nullptr;
   memset(dest, 0, destlen); // 初始化dest。
-  if (src == 0)
+  if (src == nullptr)
     return dest;
 
   if (strlen(src) > destlen - 1)
@@ -34,10 +36,10 @@ char *STRCPY(char *dest, const size_t destlen, const char *src) {
 // n：待复制的字节数。
 // 返回值：目标字符串dest的地址。
 char *STRNCPY(char *dest, const size_t destlen, const char *src, size_t n) {
-  if (dest == 0)
-    return 0;
+  if (dest == nullptr)
+    return nullptr;
   memset(dest, 0, destlen); // 初始化dest。
-  if (src == 0)
+  if (src == nullptr)
     return dest;
 
   if (n > destlen - 1)
@@ -54,9 +56,9 @@ char *STRNCPY(char *dest, const size_t destlen, const char *src, size_t n) {
 // src：待追加字符串。
 // 返回值：目标字符串dest的地址。
 char *STRCAT(char *dest, const size_t destlen, const char *src) {
-  if (dest == 0)
-    return 0;
-  if (src == 0)
+  if (dest == nullptr)
+    return nullptr;
+  if (src == nullptr)
     return dest;
 
   unsigned int left = destlen - 1 - strlen(dest);
@@ -77,9 +79,9 @@ char *STRCAT(char *dest, const size_t destlen, const char *src) {
 // n：待追加的字节数。
 // 返回值：目标字符串dest的地址。
 char *STRNCAT(char *dest, const size_t destlen, const char *src, size_t n) {
-  if (dest == 0)
-    return 0;
-  if (src == 0)
+  if (dest == nullptr)
+    return nullptr;
+  if (src == nullptr)
     return dest;
 
   size_t left = destlen - 1 - strlen(dest);
@@ -101,7 +103,7 @@ char *STRNCAT(char *dest, const size_t destlen, const char *src, size_t n) {
 // ...：填充到格式控制描述fmt中的参数。
 // 返回值：格式化后的内容的长度，程序员一般不关心返回值。
 int SPRINTF(char *dest, const size_t destlen, const char *fmt, ...) {
-  if (dest == 0)
+  if (dest == nullptr)
     return -1;
 
   memset(dest, 0, destlen);
@@ -122,13 +124,13 @@ int SPRINTF(char *dest, const size_t destlen, const char *fmt, ...) {
 // fmt：格式控制描述。
 // ...：填充到格式控制描述fmt中的参数。
 // 返回值：格式化后的内容的长度，程序员一般不关心返回值。
-int SNPRINTF(char *dest, const size_t destlen, size_t n, const char *fmt, ...) {
-  if (dest == 0)
+size_t SNPRINTF(char *dest, const size_t destlen, size_t n, const char *fmt, ...) {
+  if (dest == nullptr)
     return -1;
 
   memset(dest, 0, destlen);
 
-  int len = n;
+  size_t len = n;
   if (n > destlen)
     len = destlen;
 
@@ -144,7 +146,7 @@ int SNPRINTF(char *dest, const size_t destlen, size_t n, const char *fmt, ...) {
 // str：待处理的字符串。
 // chr：需要删除的字符。
 void DeleteLChar(char *str, const char chr) {
-  if (str == 0)
+  if (str == nullptr)
     return;
   if (strlen(str) == 0)
     return;
@@ -152,7 +154,6 @@ void DeleteLChar(char *str, const char chr) {
   char strTemp[strlen(str) + 1];
 
   int iTemp = 0;
-
   memset(strTemp, 0, sizeof(strTemp));
   strcpy(strTemp, str);
 
@@ -160,22 +161,19 @@ void DeleteLChar(char *str, const char chr) {
     iTemp++;
 
   memset(str, 0, strlen(str) + 1);
-
   strcpy(str, strTemp + iTemp);
-
-  return;
 }
 
 // 删除字符串右边指定的字符。
 // str：待处理的字符串。
 // chr：需要删除的字符。
 void DeleteRChar(char *str, const char chr) {
-  if (str == 0)
+  if (str == nullptr)
     return;
   if (strlen(str) == 0)
     return;
 
-  int istrlen = strlen(str);
+  size_t istrlen = strlen(str);
 
   while (istrlen > 0) {
     if (str[istrlen - 1] != chr)
@@ -198,17 +196,17 @@ void DeleteLRChar(char *str, const char chr) {
 // 把字符串中的小写字母转换成大写，忽略不是字母的字符。
 // str：待转换的字符串，支持char[]和string两种类型。
 void ToUpper(char *str) {
-  if (str == 0)
+  if (str == nullptr)
     return;
 
   if (strlen(str) == 0)
     return;
 
-  int istrlen = strlen(str);
+  size_t istrlen = strlen(str);
 
-  for (int ii = 0; ii < istrlen; ii++) {
+  for (size_t ii = 0; ii < istrlen; ii++) {
     if ((str[ii] >= 'a') && (str[ii] <= 'z'))
-      str[ii] = str[ii] - 32;
+      str[ii] = static_cast<char>(str[ii] - 32);
   }
 }
 
@@ -220,28 +218,24 @@ void ToUpper(string &str) {
 
   memset(strtemp, 0, sizeof(strtemp));
   strcpy(strtemp, str.c_str());
-
   ToUpper(strtemp);
-
   str = strtemp;
-
-  return;
 }
 
 // 把字符串中的大写字母转换成小写，忽略不是字母的字符。
 // str：待转换的字符串，支持char[]和string两种类型。
 void ToLower(char *str) {
-  if (str == 0)
+  if (str == nullptr)
     return;
 
   if (strlen(str) == 0)
     return;
 
-  int istrlen = strlen(str);
+  size_t istrlen = strlen(str);
 
-  for (int ii = 0; ii < istrlen; ii++) {
+  for (size_t ii = 0; ii < istrlen; ii++) {
     if ((str[ii] >= 'A') && (str[ii] <= 'Z'))
-      str[ii] = str[ii] + 32;
+      str[ii] = static_cast<char>(str[ii] + 32);
   }
 }
 
@@ -253,12 +247,8 @@ void ToLower(string &str) {
 
   memset(strtemp, 0, sizeof(strtemp));
   strcpy(strtemp, str.c_str());
-
   ToLower(strtemp);
-
   str = strtemp;
-
-  return;
 }
 
 // 字符串替换函数
@@ -271,19 +261,19 @@ void ToLower(string &str) {
 // 1、如果str2比str1要长，替换后str会变长，所以必须保证str有足够的长度，否则内存会溢出。
 // 2、如果str2中包函了str1的内容，且bloop为true，存在逻辑错误，将不执行任何替换。
 void UpdateStr(char *str, const char *str1, const char *str2, bool bloop) {
-  if (str == 0)
+  if (str == nullptr)
     return;
   if (strlen(str) == 0)
     return;
-  if ((str1 == 0) || (str2 == 0))
+  if ((str1 == nullptr) || (str2 == 0))
     return;
 
   // 如果bloop为true并且str2中包函了str1的内容，直接返回，因为会进入死循环，最终导致内存溢出。
-  if ((bloop == true) && (strstr(str2, str1) > (void *)0))
+  if (bloop && (strstr(str2, str1) > (void *)nullptr))
     return;
 
   // 尽可能分配更多的空间，但仍有可能出现内存溢出的情况，最好优化成string。
-  int ilen = strlen(str) * 10;
+  size_t ilen = strlen(str) * 10;
   if (ilen < 1000)
     ilen = 1000;
 
@@ -291,16 +281,16 @@ void UpdateStr(char *str, const char *str1, const char *str2, bool bloop) {
 
   char *strStart = str;
 
-  char *strPos = 0;
+  char *strPos = nullptr;
 
   while (true) {
-    if (bloop == true) {
+    if (bloop) {
       strPos = strstr(str, str1);
     } else {
       strPos = strstr(strStart, str1);
     }
 
-    if (strPos == 0)
+    if (strPos == nullptr)
       break;
 
     memset(strTemp, 0, sizeof(strTemp));
@@ -319,9 +309,9 @@ void UpdateStr(char *str, const char *str1, const char *str2, bool bloop) {
 // bsigned：是否包括符号（+和-），true-包括；false-不包括。
 // bdot：是否包括小数点的圆点符号，true-包括；false-不包括。
 void PickNumber(const char *src, char *dest, const bool bsigned, const bool bdot) {
-  if (dest == 0)
+  if (dest == nullptr)
     return;
-  if (src == 0) {
+  if (src == nullptr) {
     strcpy(dest, "");
     return;
   }
@@ -337,17 +327,17 @@ void PickNumber(const char *src, char *dest, const bool bsigned, const bool bdot
   ilen = strlen(strtemp);
 
   for (ipossrc = 0; ipossrc < ilen; ipossrc++) {
-    if ((bsigned == true) && (strtemp[ipossrc] == '+')) {
+    if (bsigned && (strtemp[ipossrc] == '+')) {
       dest[iposdst++] = strtemp[ipossrc];
       continue;
     }
 
-    if ((bsigned == true) && (strtemp[ipossrc] == '-')) {
+    if (bsigned && (strtemp[ipossrc] == '-')) {
       dest[iposdst++] = strtemp[ipossrc];
       continue;
     }
 
-    if ((bdot == true) && (strtemp[ipossrc] == '.')) {
+    if (bdot && (strtemp[ipossrc] == '.')) {
       dest[iposdst++] = strtemp[ipossrc];
       continue;
     }
@@ -365,7 +355,7 @@ void PickNumber(const char *src, char *dest, const bool bsigned, const bool bdot
 // 注意，str参数不支持"*"，rules参数支持"*"，函数在判断str是否匹配rules的时候，会忽略字母的大小写。
 bool MatchStr(const string str, const string rules) {
   // 如果用于比较的字符是空的，返回false
-  if (rules.size() == 0)
+  if (rules.empty())
     return false;
 
   // 如果被比较的字符串是"*"，返回true
@@ -379,7 +369,7 @@ bool MatchStr(const string str, const string rules) {
 
   int ii, jj;
   int iPOS1, iPOS2;
-  CCmdStr CmdStr, CmdSubStr;
+  CommandStr CmdStr, CmdSubStr;
 
   string strFileName, strMatchStr;
 
@@ -394,7 +384,7 @@ bool MatchStr(const string str, const string rules) {
 
   for (ii = 0; ii < CmdStr.CmdCount(); ii++) {
     // 如果为空，就一定要跳过，否则就会被配上
-    if (CmdStr.m_vCmdStr[ii].empty() == true)
+    if (CmdStr.m_vCmdStr[ii].empty())
       continue;
 
     iPOS1 = iPOS2 = 0;
@@ -438,14 +428,14 @@ bool MatchFileName(const string in_FileName, const string in_MatchStr) { return 
 // 返回值：字符串str的字数。
 int Words(const char *str) {
   int wlen = 0;
-  bool biswide = 0;
-  int ilen = strlen(str);
+  bool biswide = false;
+  size_t ilen = strlen(str);
 
-  for (int ii = 0; ii < ilen; ii++) {
+  for (size_t ii = 0; ii < ilen; ii++) {
     if ((unsigned int)str[ii] < 128) {
       wlen = wlen + 1;
     } else {
-      if (biswide == true) {
+      if (biswide) {
         wlen = wlen + 1;
         biswide = false;
       } else {

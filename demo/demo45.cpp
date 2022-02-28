@@ -26,7 +26,7 @@ int main(int argc, char *argv[]) {
   }
 
   // 加载参数文件。
-  freecplus::CIniFile IniFile;
+  freecplus::XmlFileReader IniFile;
   if (IniFile.LoadFile(argv[1]) == false) {
     printf("IniFile.LoadFile(%s) failed.\n", argv[1]);
     return -1;

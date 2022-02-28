@@ -8,7 +8,7 @@
 #include "ftp_client.h"
 
 int main(int argc, char *argv[]) {
-  freecplus::Cftp ftp;
+  freecplus::FtpClient ftp;
 
   // 登录远程FTP服务器，请改为你自己服务器的ip地址。
   if (ftp.login("172.16.0.15:21", "freecplus", "freecpluspwd",
@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
     return -1;
   }
 
-  freecplus::CFile File;  // 采用freecplus框架的CFile类来操作list文件。
+  freecplus::File File;  // 采用freecplus框架的CFile类来操作list文件。
   char strFileName[301];
 
   File.Open("/tmp/list/tmp.list", "r");  // 打开list文件。

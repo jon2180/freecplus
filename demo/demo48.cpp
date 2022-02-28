@@ -7,7 +7,7 @@
 #include "freecplus.h"
 
 int main(int argc, char *argv[]) {
-  freecplus::CTcpServer TcpServer;  // 创建服务端对象。
+  freecplus::TcpServer TcpServer;  // 创建服务端对象。
 
   if (TcpServer.InitServer(5858) == false)  // 初始化TcpServer的通信端口。
   {
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
     return -1;
   }
 
-  printf("客户端(%s)已连接。\n", TcpServer.GetIP());
+  printf("客户端(%s)已连接。\n", TcpServer.GetIp());
 
   char strbuffer[1024];  // 存放数据的缓冲区。
 

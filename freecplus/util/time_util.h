@@ -4,7 +4,6 @@
 
 namespace freecplus {
 
-///////////////////////////////////// /////////////////////////////////////
 /*
   取操作系统的时间。
   stime：用于存放获取到的时间字符串。
@@ -27,13 +26,13 @@ namespace freecplus {
     3）调用函数的时候，如果fmt与上述格式都匹配，stime的内容将为空。
     4）时间的年份是四位，其它的可能是一位和两位，如果不足两位，在前面补0。
 */
-void LocalTime(char *stime, const char *fmt = 0, const int timetvl = 0);
+void LocalTime(char *stime, const char *fmt = nullptr, int timetvl = 0);
 
 // 把整数表示的时间转换为字符串表示的时间。
 // ltime：整数表示的时间。
 // stime：字符串表示的时间。
 // fmt：输出字符串时间stime的格式，与LocalTime函数的fmt参数相同，如果fmt的格式不正确，stime将为空。
-void timetostr(const time_t ltime, char *stime, const char *fmt = 0);
+void timetostr(time_t ltime, char *stime, const char *fmt = 0);
 
 // 把字符串表示的时间转换为整数表示的时间。
 // stime：字符串表示的时间，格式不限，但一定要包括yyyymmddhh24miss，一个都不能少，顺序也不能变。
@@ -47,7 +46,6 @@ time_t strtotime(const char *stime);
 // fmt：输出字符串时间out_stime的格式，与LocalTime函数的fmt参数相同。
 // 注意：in_stime和out_stime参数可以是同一个变量的地址，如果调用失败，out_stime的内容会清空。
 // 返回值：true-成功，false-失败，如果返回失败，可以认为是in_stime的格式不正确。
-bool AddTime(const char *in_stime, char *out_stime, const int timetvl, const char *fmt = 0);
-///////////////////////////////////// /////////////////////////////////////
+bool AddTime(const char *in_stime, char *out_stime, int timetvl, const char *fmt = nullptr);
 
 } // namespace freecplus

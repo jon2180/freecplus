@@ -6,7 +6,7 @@
 #include "freecplus.h"
 
 int main() {
-  freecplus::CLogFile logfile;
+  freecplus::LogFile logfile;
 
   // 打开日志文件，如果"/tmp/log"不存在，就创建它，但是要确保当前用户具备创建目录的权限。
   if (logfile.Open("/tmp/log/demo42.log") == false) {
@@ -16,7 +16,7 @@ int main() {
 
   logfile.Write("demo42程序开始运行。\n");
 
-  freecplus::CDir Dir;
+  freecplus::Dir Dir;
 
   // 扫描/tmp/data目录下文件名匹配"surfdata_*.xml"的文件。
   if (Dir.OpenDir("/tmp/data", "surfdata_*.xml") == false) {
@@ -24,7 +24,7 @@ int main() {
     return -1;
   }
 
-  freecplus::CFile File;
+  freecplus::File File;
 
   while (Dir.ReadDir() == true) {
     logfile.Write("处理文件%s...", Dir.m_FullFileName);

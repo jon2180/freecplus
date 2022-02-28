@@ -10,7 +10,7 @@ using std::FILE;
 // 文件操作相关的函数和类
 
 // 文件操作类声明
-class CFile {
+class File {
 private:
   FILE *m_fp;              // 文件指针
   bool m_bEnBuffer;        // 是否启用缓冲，true-启用；false-不启用，缺省是启用。
@@ -18,7 +18,7 @@ private:
   char m_filenametmp[301]; // 临时文件名，在m_filename后加".tmp"。
 
 public:
-  CFile(); // 构造函数。
+  File(); // 构造函数。
 
   bool IsOpened(); // 判断文件是否已打开，返回值：true-已打开；false-未打开。
 
@@ -46,14 +46,14 @@ public:
   // readsize：本次打算读取的字节数，如果已经读取到了结束标志"\n"，函数返回。
   // bdelcrt：是否删除行结束标志"\r"和"\n"，true-删除；false-不删除，缺省值是false。
   // 返回值：true-成功；false-失败，一般情况下，失败可以认为是文件已结束。
-  bool Fgets(char *buffer, const int readsize, bool bdelcrt = false);
+  bool Fgets(char *buffer, int readsize, bool bdelcrt = false);
 
   // 从文件文件中读取一行。
   // buffer：用于存放读取的内容，buffer必须大于readsize+1，否则可能会造成读到的数据不完整或内存的溢出。
   // readsize：本次打算读取的字节数，如果已经读取到了结束标志，函数返回。
   // endbz：行内容结束的标志，缺省为空，表示行内容以"\n"为结束标志。
   // 返回值：true-成功；false-失败，一般情况下，失败可以认为是文件已结束。
-  bool FFGETS(char *buffer, const int readsize, const char *endbz = 0);
+  bool FFGETS(char *buffer, int readsize, const char *endbz = 0);
 
   // 从文件中读取数据块。
   // ptr：用于存放读取的内容。
@@ -70,7 +70,7 @@ public:
   // 关闭文件指针，如果存在临时文件，就删除它。
   void Close();
 
-  ~CFile(); // 析构函数会调用Close方法。
+  ~File(); // 析构函数会调用Close方法。
 };
 
 } // namespace freecplus

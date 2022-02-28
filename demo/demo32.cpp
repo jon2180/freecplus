@@ -5,7 +5,7 @@
 #include "freecplus.h"
 
 int main() {
-  freecplus::CDir Dir;
+  freecplus::Dir Dir;
 
   if (Dir.OpenDir("/tmp/root", "*.h,*cpp", 100, true, true) == false) {
     printf("Dir.OpenDir(/tmp/root) failed.\n");

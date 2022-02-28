@@ -7,14 +7,14 @@
 
 namespace freecplus {
 
-CIniFile::CIniFile() {}
+XmlFileReader::XmlFileReader() = default;
 
-bool CIniFile::LoadFile(const char *filename) {
+bool XmlFileReader::LoadFile(const char *filename) {
   m_xmlbuffer.clear();
 
-  CFile File;
+  File File;
 
-  if (File.Open(filename, "r") == false)
+  if (!File.Open(filename, "r"))
     return false;
 
   char strLine[501];
@@ -22,7 +22,7 @@ bool CIniFile::LoadFile(const char *filename) {
   while (true) {
     memset(strLine, 0, sizeof(strLine));
 
-    if (File.FFGETS(strLine, 500) == false)
+    if (!File.FFGETS(strLine, 500))
       break;
 
     m_xmlbuffer = m_xmlbuffer + strLine;
@@ -34,31 +34,31 @@ bool CIniFile::LoadFile(const char *filename) {
   return true;
 }
 
-bool CIniFile::GetValue(const char *fieldname, bool *value) {
+bool XmlFileReader::GetValue(const char *fieldname, bool *value) const {
   return GetXMLBuffer(m_xmlbuffer.c_str(), fieldname, value);
 }
 
-bool CIniFile::GetValue(const char *fieldname, char *value, int ilen) {
+bool XmlFileReader::GetValue(const char *fieldname, char *value, int ilen) const {
   return GetXMLBuffer(m_xmlbuffer.c_str(), fieldname, value, ilen);
 }
 
-bool CIniFile::GetValue(const char *fieldname, int *value) {
+bool XmlFileReader::GetValue(const char *fieldname, int *value) const {
   return GetXMLBuffer(m_xmlbuffer.c_str(), fieldname, value);
 }
 
-bool CIniFile::GetValue(const char *fieldname, unsigned int *value) {
+bool XmlFileReader::GetValue(const char *fieldname, unsigned int *value) const {
   return GetXMLBuffer(m_xmlbuffer.c_str(), fieldname, value);
 }
 
-bool CIniFile::GetValue(const char *fieldname, long *value) {
+bool XmlFileReader::GetValue(const char *fieldname, long *value) const {
   return GetXMLBuffer(m_xmlbuffer.c_str(), fieldname, value);
 }
 
-bool CIniFile::GetValue(const char *fieldname, unsigned long *value) {
+bool XmlFileReader::GetValue(const char *fieldname, unsigned long *value) const {
   return GetXMLBuffer(m_xmlbuffer.c_str(), fieldname, value);
 }
 
-bool CIniFile::GetValue(const char *fieldname, double *value) {
+bool XmlFileReader::GetValue(const char *fieldname, double *value) const {
   return GetXMLBuffer(m_xmlbuffer.c_str(), fieldname, value);
 }
 

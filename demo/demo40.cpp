@@ -5,7 +5,7 @@
 #include "freecplus.h"
 
 int main() {
-  freecplus::CDir Dir;
+  freecplus::Dir Dir;
 
   // 扫描/tmp/data目录下文件名匹配"surfdata_*.xml"的文件。
   if (Dir.OpenDir("/tmp/data", "surfdata_*.xml") == false) {
@@ -13,7 +13,7 @@ int main() {
     return -1;
   }
 
-  freecplus::CFile File;
+  freecplus::File File;
 
   while (Dir.ReadDir() == true) {
     printf("处理文件%s...", Dir.m_FullFileName);

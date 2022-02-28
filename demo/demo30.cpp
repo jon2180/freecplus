@@ -5,7 +5,7 @@
 #include "freecplus.h"
 
 int main() {
-  freecplus::MKDIR("/tmp/aaa/bbb/ccc/ddd", false); // 创建"/tmp/aaa/bbb/ccc/ddd"目录。
+  freecplus::MakeDir("/tmp/aaa/bbb/ccc/ddd", false); // 创建"/tmp/aaa/bbb/ccc/ddd"目录。
 
-  freecplus::MKDIR("/tmp/111/222/333/444/data.xml", true); // 创建"/tmp/111/222/333/444"目录。
+  freecplus::MakeDir("/tmp/111/222/333/444/data.xml", true); // 创建"/tmp/111/222/333/444"目录。
 }

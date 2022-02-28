@@ -7,7 +7,7 @@
 #include "ftp_client.h"
 
 int main(int argc, char *argv[]) {
-  freecplus::Cftp ftp;
+  freecplus::FtpClient ftp;
 
   // 登录远程FTP服务器，请改为你自己服务器的ip地址。
   if (ftp.login("172.16.0.15:21", "freecplus", "freecpluspwd", FTPLIB_PASSIVE) == false) {

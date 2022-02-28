@@ -7,7 +7,7 @@
 #include "freecplus.h"
 
 int main() {
-  freecplus::CLogFile logfile;
+  freecplus::LogFile logfile;
 
   // 打开日志文件，如果"/tmp/log"不存在，就创建它，但是要确保当前用户具备创建目录的权限。
   if (logfile.Open("/tmp/log/demo43.log") == false) {

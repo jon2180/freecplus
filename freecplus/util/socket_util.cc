@@ -41,7 +41,7 @@ bool TcpRead(const int sockfd, char *buffer, int *ibuflen, const int itimeout) {
   return true;
 }
 
-bool TcpWrite(const int sockfd, const char *buffer, const int ibuflen) {
+bool TcpWrite(const int sockfd, const char *buffer, const size_t ibuflen) {
   if (sockfd == -1)
     return false;
 
@@ -57,7 +57,7 @@ bool TcpWrite(const int sockfd, const char *buffer, const int ibuflen) {
   if (select(sockfd + 1, 0, &tmpfd, 0, &timeout) <= 0)
     return false;
 
-  int ilen = 0;
+  size_t ilen = 0;
 
   // 如果长度为0，就采用字符串的长度
   if (ibuflen == 0)
@@ -72,7 +72,7 @@ bool TcpWrite(const int sockfd, const char *buffer, const int ibuflen) {
   memcpy(strTBuffer, &ilenn, 4);
   memcpy(strTBuffer + 4, buffer, ilen);
 
-  if (Writen(sockfd, strTBuffer, ilen + 4) == false)
+  if (!Writen(sockfd, strTBuffer, ilen + 4))
     return false;
 
   return true;
@@ -111,15 +111,15 @@ bool Writen(const int sockfd, const char *buffer, const size_t n) {
 }
 
 // 把文件通过sockfd发送给对端
-bool SendFile(int sockfd, struct st_fileinfo *stfileinfo, CLogFile *logfile) {
+bool SendFile(int sockfd, struct st_fileinfo *stfileinfo, LogFile *logfile) {
   char strSendBuffer[301], strRecvBuffer[301];
   memset(strSendBuffer, 0, sizeof(strSendBuffer));
 
   snprintf(strSendBuffer, 300, "<filename>%s</filename><filesize>%d</filesize><mtime>%s</mtime>", stfileinfo->filename,
            stfileinfo->filesize, stfileinfo->mtime);
 
-  if (TcpWrite(sockfd, strSendBuffer) == false) {
-    if (logfile != 0)
+  if (!TcpWrite(sockfd, strSendBuffer)) {
+    if (logfile != nullptr)
       logfile->Write("SendFile TcpWrite() failed.\n");
     return false;
   }
@@ -129,11 +129,11 @@ bool SendFile(int sockfd, struct st_fileinfo *stfileinfo, CLogFile *logfile) {
   int onread = 0;
   char buffer[1000];
 
-  FILE *fp = 0;
+  FILE *fp = nullptr;
 
-  if ((fp = FOPEN(stfileinfo->filename, "rb")) == 0) {
-    if (logfile != 0)
-      logfile->Write("SendFile FOPEN(%s) failed.\n", stfileinfo->filename);
+  if ((fp = OpenFile(stfileinfo->filename, "rb")) == nullptr) {
+    if (logfile != nullptr)
+      logfile->Write("SendFile OpenFile(%s) failed.\n", stfileinfo->filename);
     return false;
   }
 
@@ -148,11 +148,11 @@ bool SendFile(int sockfd, struct st_fileinfo *stfileinfo, CLogFile *logfile) {
     bytes = fread(buffer, 1, onread, fp);
 
     if (bytes > 0) {
-      if (Writen(sockfd, buffer, bytes) == false) {
-        if (logfile != 0)
+      if (!Writen(sockfd, buffer, bytes)) {
+        if (logfile != nullptr)
           logfile->Write("SendFile Writen() failed.\n");
         fclose(fp);
-        fp = 0;
+        fp = nullptr;
         return false;
       }
     }
@@ -168,8 +168,8 @@ bool SendFile(int sockfd, struct st_fileinfo *stfileinfo, CLogFile *logfile) {
   // 接收对端返回的确认报文
   int buflen = 0;
   memset(strRecvBuffer, 0, sizeof(strRecvBuffer));
-  if (TcpRead(sockfd, strRecvBuffer, &buflen) == false) {
-    if (logfile != 0)
+  if (!TcpRead(sockfd, strRecvBuffer, &buflen)) {
+    if (logfile != nullptr)
       logfile->Write("SendFile TcpRead() failed.\n");
     return false;
   }
@@ -181,24 +181,24 @@ bool SendFile(int sockfd, struct st_fileinfo *stfileinfo, CLogFile *logfile) {
 }
 
 // 接收通过socdfd发送过来的文件
-bool RecvFile(int sockfd, struct st_fileinfo *stfileinfo, CLogFile *logfile) {
+bool RecvFile(int sockfd, struct st_fileinfo *stfileinfo, LogFile *logfile) {
   char strSendBuffer[301];
 
   char strfilenametmp[301];
   memset(strfilenametmp, 0, sizeof(strfilenametmp));
   sprintf(strfilenametmp, "%s.tmp", stfileinfo->filename);
 
-  FILE *fp = 0;
+  FILE *fp = nullptr;
 
-  if ((fp = FOPEN(strfilenametmp, "wb")) == 0) // FOPEN可创建目录
+  if ((fp = OpenFile(strfilenametmp, "wb")) == nullptr) // FOPEN可创建目录
   {
-    if (logfile != 0)
-      logfile->Write("RecvFile FOPEN %s failed.\n", strfilenametmp);
+    if (logfile != nullptr)
+      logfile->Write("RecvFile OpenFile %s failed.\n", strfilenametmp);
     return false;
   }
 
   int total_bytes = 0;
-  int onread = 0;
+  int onread;
   char buffer[1000];
 
   while (true) {
@@ -209,11 +209,11 @@ bool RecvFile(int sockfd, struct st_fileinfo *stfileinfo, CLogFile *logfile) {
     else
       onread = stfileinfo->filesize - total_bytes;
 
-    if (Readn(sockfd, buffer, onread) == false) {
-      if (logfile != 0)
+    if (!Readn(sockfd, buffer, onread)) {
+      if (logfile != nullptr)
         logfile->Write("RecvFile Readn() failed.\n");
       fclose(fp);
-      fp = 0;
+      fp = nullptr;
       return false;
     }
 
@@ -228,16 +228,16 @@ bool RecvFile(int sockfd, struct st_fileinfo *stfileinfo, CLogFile *logfile) {
   fclose(fp);
 
   // 重置文件的时间
-  UTime(strfilenametmp, stfileinfo->mtime);
+  SetFileModifyTime(strfilenametmp, stfileinfo->mtime);
 
   memset(strSendBuffer, 0, sizeof(strSendBuffer));
-  if (RENAME(strfilenametmp, stfileinfo->filename) == true)
+  if (RenameFile(strfilenametmp, stfileinfo->filename))
     strcpy(strSendBuffer, "ok");
   else
     strcpy(strSendBuffer, "failed");
 
   // 向对端返回响应内容
-  if (TcpWrite(sockfd, strSendBuffer) == false) {
+  if (!TcpWrite(sockfd, strSendBuffer)) {
     if (logfile != 0)
       logfile->Write("RecvFile TcpWrite() failed.\n");
     return false;

@@ -10,8 +10,8 @@ int main() {
   FILE *fp = 0;
 
   // 用FOPEN函数代替fopen库函数，如果目录/tmp/aaa/bbb/ccc不存在，会创建它。
-  if ((fp = freecplus::FOPEN("/tmp/aaa/bbb/ccc/tmp.xml", "w")) == 0) {
-    printf("FOPEN(/tmp/aaa/bbb/ccc/tmp.xml) %d:%s\n", errno, strerror(errno));
+  if ((fp = freecplus::OpenFile("/tmp/aaa/bbb/ccc/tmp.xml", "w")) == 0) {
+    printf("OpenFile(/tmp/aaa/bbb/ccc/tmp.xml) %d:%s\n", errno, strerror(errno));
     return -1;
   }
 

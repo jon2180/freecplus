@@ -23,7 +23,7 @@ int main() {
   char buffer[301];
   freecplus::STRCPY(buffer, sizeof(buffer), "messi,10,true,30,68.5,2100000,Barcelona");
 
-  freecplus::CCmdStr CmdStr;
+  freecplus::CommandStr CmdStr;
   CmdStr.SplitToCmd(buffer, ",");        // 拆分buffer
   CmdStr.GetValue(0, stplayer.name, 50); // 获取姓名
   CmdStr.GetValue(1, stplayer.no, 5);    // 获取球衣号码

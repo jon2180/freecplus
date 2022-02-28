@@ -9,7 +9,7 @@
 #include <cstring>
 
 int main() {
-  freecplus::CFile File;
+  freecplus::File File;
 
   char strLocalTime[21]; // 用于存放系统当前的时间，格式yyyymmddhh24miss。
   memset(strLocalTime, 0, sizeof(strLocalTime));

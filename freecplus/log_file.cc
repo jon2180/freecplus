@@ -6,13 +6,10 @@
 #include "util/file_util.h"
 #include "util/time_util.h"
 
-#include "file.h"
-#include "time.h"
-
 namespace freecplus {
 
-CLogFile::CLogFile(const long MaxLogSize) {
-  m_tracefp = 0;
+LogFile::LogFile(const long MaxLogSize) {
+  m_tracefp = nullptr;
   memset(m_filename, 0, sizeof(m_filename));
   memset(m_openmode, 0, sizeof(m_openmode));
   m_bBackup = true;
@@ -22,12 +19,12 @@ CLogFile::CLogFile(const long MaxLogSize) {
     m_MaxLogSize = 10;
 }
 
-CLogFile::~CLogFile() { Close(); }
+LogFile::~LogFile() { Close(); }
 
-void CLogFile::Close() {
-  if (m_tracefp != 0) {
+void LogFile::Close() {
+  if (m_tracefp != nullptr) {
     fclose(m_tracefp);
-    m_tracefp = 0;
+    m_tracefp = nullptr;
   }
 
   memset(m_filename, 0, sizeof(m_filename));
@@ -41,19 +38,19 @@ void CLogFile::Close() {
 // openmode：日志文件的打开方式，与fopen库函数打开文件的方式相同，缺省值是"a+"。
 // bBackup：是否自动切换，true-切换，false-不切换，在多进程的服务程序中，如果多个进行共用一个日志文件，bBackup必须为false。
 // bEnBuffer：是否启用文件缓冲机制，true-启用，false-不启用，如果启用缓冲区，那么写进日志文件中的内容不会立即写入文件，缺省是不启用。
-bool CLogFile::Open(const char *filename, const char *openmode, bool bBackup, bool bEnBuffer) {
+bool LogFile::Open(const char *filename, const char *openmode, bool bBackup, bool bEnBuffer) {
   // 如果文件指针是打开的状态，先关闭它。
   Close();
 
   strcpy(m_filename, filename);
   m_bEnBuffer = bEnBuffer;
   m_bBackup = bBackup;
-  if (openmode == 0)
+  if (openmode == nullptr)
     strcpy(m_openmode, "a+");
   else
     strcpy(m_openmode, openmode);
 
-  if ((m_tracefp = FOPEN(m_filename, m_openmode)) == 0)
+  if ((m_tracefp = OpenFile(m_filename, m_openmode)) == nullptr)
     return false;
 
   return true;
@@ -62,19 +59,19 @@ bool CLogFile::Open(const char *filename, const char *openmode, bool bBackup, bo
 // 如果日志文件大于100M，就把当前的日志文件备份成历史日志文件，切换成功后清空当前日志文件的内容。
 // 备份后的文件会在日志文件名后加上日期时间。
 // 注意，在多进程的程序中，日志文件不可切换，多线的程序中，日志文件可以切换。
-bool CLogFile::BackupLogFile() {
-  if (m_tracefp == 0)
+bool LogFile::BackupLogFile() {
+  if (m_tracefp == nullptr)
     return false;
 
   // 不备份
-  if (m_bBackup == false)
+  if (!m_bBackup)
     return true;
 
   fseek(m_tracefp, 0L, 2);
 
   if (ftell(m_tracefp) > m_MaxLogSize * 1024 * 1024) {
     fclose(m_tracefp);
-    m_tracefp = 0;
+    m_tracefp = nullptr;
 
     char strLocalTime[21];
     memset(strLocalTime, 0, sizeof(strLocalTime));
@@ -85,7 +82,7 @@ bool CLogFile::BackupLogFile() {
     snprintf(bak_filename, 300, "%s.%s", m_filename, strLocalTime);
     rename(m_filename, bak_filename);
 
-    if ((m_tracefp = FOPEN(m_filename, m_openmode)) == 0)
+    if ((m_tracefp = OpenFile(m_filename, m_openmode)) == nullptr)
       return false;
   }
 
@@ -94,11 +91,11 @@ bool CLogFile::BackupLogFile() {
 
 // 把内容写入日志文件，fmt是可变参数，使用方法与printf库函数相同。
 // Write方法会写入当前的时间，WriteEx方法不写时间。
-bool CLogFile::Write(const char *fmt, ...) {
-  if (m_tracefp == 0)
+bool LogFile::Write(const char *fmt, ...) {
+  if (m_tracefp == nullptr)
     return false;
 
-  if (BackupLogFile() == false)
+  if (!BackupLogFile())
     return false;
 
   char strtime[20];
@@ -110,7 +107,7 @@ bool CLogFile::Write(const char *fmt, ...) {
   vfprintf(m_tracefp, fmt, ap);
   va_end(ap);
 
-  if (m_bEnBuffer == false)
+  if (!m_bEnBuffer)
     fflush(m_tracefp);
 
   return true;
@@ -118,8 +115,8 @@ bool CLogFile::Write(const char *fmt, ...) {
 
 // 把内容写入日志文件，fmt是可变参数，使用方法与printf库函数相同。
 // Write方法会写入当前的时间，WriteEx方法不写时间。
-bool CLogFile::WriteEx(const char *fmt, ...) {
-  if (m_tracefp == 0)
+bool LogFile::WriteEx(const char *fmt, ...) const {
+  if (m_tracefp == nullptr)
     return false;
 
   va_list ap;
@@ -127,7 +124,7 @@ bool CLogFile::WriteEx(const char *fmt, ...) {
   vfprintf(m_tracefp, fmt, ap);
   va_end(ap);
 
-  if (m_bEnBuffer == false)
+  if (!m_bEnBuffer)
     fflush(m_tracefp);
 
   return true;

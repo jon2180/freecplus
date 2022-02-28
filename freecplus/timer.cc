@@ -1,14 +1,14 @@
 #include "timer.h"
 
 #include <cstring>
-#include <stdlib.h>
+#include <cstdlib>
 #include <sys/time.h>
 
 #include <cstdio>
 
 namespace freecplus {
 
-CTimer::CTimer() {
+Timer::Timer() {
   memset(&m_start, 0, sizeof(struct timeval));
   memset(&m_end, 0, sizeof(struct timeval));
 
@@ -17,12 +17,12 @@ CTimer::CTimer() {
 }
 
 // 开始计时
-void CTimer::Start() { gettimeofday(&m_start, 0); }
+void Timer::Start() { gettimeofday(&m_start, nullptr); }
 
 // 计算已逝去的时间，单位：秒，小数点后面是微秒
-double CTimer::Elapsed() {
+double Timer::Elapsed() {
 
-  gettimeofday(&m_end, 0);
+  gettimeofday(&m_end, nullptr);
 
   double dstart, dend;
 
@@ -30,11 +30,11 @@ double CTimer::Elapsed() {
 
   char strtemp[51];
   memset(strtemp, 0, sizeof(strtemp));
-  snprintf(strtemp, 30, "%ld.%ld", m_start.tv_sec, m_start.tv_usec);
+  snprintf(strtemp, 30, "%ld.%d", m_start.tv_sec, m_start.tv_usec);
   dstart = atof(strtemp);
 
   memset(strtemp, 0, sizeof(strtemp));
-  snprintf(strtemp, 30, "%ld.%ld", m_end.tv_sec, m_end.tv_usec);
+  snprintf(strtemp, 30, "%ld.%d", m_end.tv_sec, m_end.tv_usec);
   dend = atof(strtemp);
 
   // 重新开始计时

@@ -9,14 +9,14 @@
 
 namespace freecplus {
 
-CTcpServer::CTcpServer() {
+TcpServer::TcpServer() {
   m_listenfd = -1;
   m_connfd = -1;
   m_socklen = 0;
   m_btimeout = false;
 }
 
-bool CTcpServer::InitServer(const unsigned int port) {
+bool TcpServer::InitServer(const unsigned int port) {
   if (m_listenfd > 0) {
     close(m_listenfd);
     m_listenfd = -1;
@@ -52,7 +52,7 @@ bool CTcpServer::InitServer(const unsigned int port) {
   return true;
 }
 
-bool CTcpServer::Accept() {
+bool TcpServer::Accept() {
   if (m_listenfd == -1)
     return false;
 
@@ -62,9 +62,9 @@ bool CTcpServer::Accept() {
   return true;
 }
 
-char *CTcpServer::GetIP() { return (inet_ntoa(m_clientaddr.sin_addr)); }
+char *TcpServer::GetIp() const { return (inet_ntoa(m_clientaddr.sin_addr)); }
 
-bool CTcpServer::Read(char *buffer, const int itimeout) {
+bool TcpServer::Read(char *buffer, const int itimeout) {
   if (m_connfd == -1)
     return false;
 
@@ -92,7 +92,7 @@ bool CTcpServer::Read(char *buffer, const int itimeout) {
   return (TcpRead(m_connfd, buffer, &m_buflen));
 }
 
-bool CTcpServer::Write(const char *buffer, const int ibuflen) {
+bool TcpServer::Write(const char *buffer, const int ibuflen) {
   if (m_connfd == -1)
     return false;
 
@@ -114,28 +114,28 @@ bool CTcpServer::Write(const char *buffer, const int ibuflen) {
     return false;
   }
 
-  int ilen = ibuflen;
+  size_t ilen = ibuflen;
   if (ilen == 0)
     ilen = strlen(buffer);
 
   return (TcpWrite(m_connfd, buffer, ilen));
 }
 
-void CTcpServer::CloseListen() {
+void TcpServer::CloseListen() {
   if (m_listenfd > 0) {
     close(m_listenfd);
     m_listenfd = -1;
   }
 }
 
-void CTcpServer::CloseClient() {
+void TcpServer::CloseClient() {
   if (m_connfd > 0) {
     close(m_connfd);
     m_connfd = -1;
   }
 }
 
-CTcpServer::~CTcpServer() {
+TcpServer::~TcpServer() {
   CloseListen();
   CloseClient();
 }
