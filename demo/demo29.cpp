@@ -1,11 +1,14 @@
 /*
  *  程序名：demo29.cpp，此程序演示freecplus框架中的CTimer类（计时器）的用法。
  *  作者：C语言技术网(www.freecplus.net) 日期：20190525
-*/
-#include "../_freecplus.h"
+ */
+#include "freecplus.h"
+
+#include <cstdlib>
+#include <unistd.h>
 
 int main() {
-  CTimer Timer;
+  freecplus::CTimer Timer;
 
   printf("elapsed=%lf\n", Timer.Elapsed());
   sleep(1);
@@ -19,4 +22,3 @@ int main() {
   sleep(10);
   printf("elapsed=%lf\n", Timer.Elapsed());
 }
-
