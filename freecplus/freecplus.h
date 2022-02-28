@@ -7,7 +7,7 @@
 #include "util/time_util.h"
 #include "util/xml_buffer.h"
 
-#include "c_cmd_str.h"
+#include "command_str.h"
 #include "dir.h"
 #include "file.h"
 #include "ini_file.h"

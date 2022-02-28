@@ -2,6 +2,8 @@
  *  程序名：demo43.cpp，此程序演示freecplus框架的CLogFile类的日志文件的切换。
  *  作者：C语言技术网(www.freecplus.net) 日期：20190525
  */
+#include <cstdio>
+
 #include "freecplus.h"
 
 int main() {

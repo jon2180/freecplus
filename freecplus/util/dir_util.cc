@@ -1,9 +1,10 @@
 #include "dir_util.h"
 
-#include <cstring>    // strncpy strlen
-#include <sys/stat.h> // mkdir
+#include <sys/stat.h>  // mkdir
 #include <sys/types.h>
-#include <unistd.h> // access
+#include <unistd.h>  // access
+
+#include <cstring>  // strncpy strlen
 
 namespace freecplus {
 
@@ -19,27 +20,23 @@ bool MKDIR(const char *filename, bool is_filename) {
   int ilen = strlen(filename);
 
   for (int ii = 1; ii < ilen; ii++) {
-    if (filename[ii] != '/')
-      continue;
+    if (filename[ii] != '/') continue;
 
     memset(strPathName, 0, sizeof(strPathName));
     strncpy(strPathName, filename, ii);
 
-    if (access(strPathName, F_OK) == 0)
-      continue;
+    if (access(strPathName, F_OK) == 0) continue;
 
-    if (mkdir(strPathName, 0755) != 0)
-      return false;
+    if (mkdir(strPathName, 0755) != 0) return false;
   }
 
   if (is_filename == false) {
     if (access(filename, F_OK) != 0) {
-      if (mkdir(filename, 0755) != 0)
-        return false;
+      if (mkdir(filename, 0755) != 0) return false;
     }
   }
 
   return true;
 }
 
-} // namespace freecplus
+}  // namespace freecplus

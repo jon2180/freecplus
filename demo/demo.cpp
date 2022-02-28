@@ -1,6 +1,6 @@
-#include "freecplus.h"
-
 #include <cstring>
+
+#include "freecplus.h"
 
 int main() {
   freecplus::CFile File;
@@ -14,8 +14,7 @@ int main() {
 
   while (true) {
     memset(strBuffer, 0, sizeof(strBuffer));
-    if (File.FFGETS(strBuffer, 1000, "</row>") == false)
-      break;
+    if (File.FFGETS(strBuffer, 1000, "</row>") == false) break;
 
     printf("=%s=\n", strBuffer);
   }

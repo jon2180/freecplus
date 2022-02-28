@@ -1,8 +1,9 @@
 #include "string_util.h"
 
 #include <cstring>
+#include <cstdarg>
 
-#include <c_cmd_str.h>
+#include "command_str.h"
 
 namespace freecplus {
 

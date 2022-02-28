@@ -1,6 +1,7 @@
 #include "file.h"
 
 #include <cstring>
+#include <cstdarg>
 
 #include "util/file_util.h"
 #include "util/string_util.h"

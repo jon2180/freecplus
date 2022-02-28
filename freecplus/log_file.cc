@@ -1,6 +1,7 @@
 #include "log_file.h"
 
 #include <cstring>
+#include <cstdarg>
 
 #include "util/file_util.h"
 #include "util/time_util.h"

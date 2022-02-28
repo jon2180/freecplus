@@ -2,9 +2,10 @@
  *  程序名：demo45.cpp，此程序演示采用freecplus框架的CIniFile类加载参数文件。
  *  作者：C语言技术网(www.freecplus.net) 日期：20190525
  */
-#include "freecplus.h"
 
 #include <cstring>
+
+#include "freecplus.h"
 
 // 用于存放本程序运行参数的数据结构。
 struct st_args {

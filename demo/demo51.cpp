@@ -2,7 +2,10 @@
  *  程序名：demo51.cpp，此程序演示采用freecplus框架的Cftp类上传文件。
  *  作者：C语言技术网(www.freecplus.net) 日期：20190525
  */
-#include "../_ftp.h"
+
+#include <cstdio>
+
+#include "ftp_client.h"
 
 int main(int argc, char *argv[]) {
   freecplus::Cftp ftp;

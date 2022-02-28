@@ -11,4 +11,4 @@ namespace freecplus {
 // 返回值：true-成功，false-失败，如果返回失败，原因有大概有三种情况：1）权限不足；2）pathorfilename参数不是合法的文件名或目录名；3）磁盘空间不足。
 bool MKDIR(const char *path_or_filename, bool is_filename = true);
 
-} // namespace freecplus
+}  // namespace freecplus
